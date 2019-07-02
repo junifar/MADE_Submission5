@@ -13,6 +13,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
+        buildConfigField "String", "TMDB_API_KEY", "\"311c35d7efd9fb82761b88adc22ddd89\""
     }
     buildTypes {
         release {
@@ -32,4 +34,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.2"
 }
