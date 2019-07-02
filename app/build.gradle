@@ -13,7 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
+        buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3\""
         buildConfigField "String", "TMDB_API_KEY", "\"311c35d7efd9fb82761b88adc22ddd89\""
     }
     buildTypes {
@@ -38,4 +38,7 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.2"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.2'
+
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
 }

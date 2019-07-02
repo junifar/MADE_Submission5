@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.rubahapi.moviedb.model.Movie
 import com.rubahapi.moviedb.model.TvShow
 
@@ -59,8 +60,9 @@ class DetailMovieActivity : AppCompatActivity() {
         val textMovieName = findViewById<TextView>(R.id.textMovieName)
         val textViewDescription = findViewById<TextView>(R.id.textViewDescription)
 
-        image_logo.setImageResource(movie.imageUrl)
-        textMovieName.text = movie.name
-        textViewDescription.text = movie.description
+        Glide.with(this).load("https://image.tmdb.org/t/p/w370_and_h556_bestv2${movie.poster_path}")
+            .into(image_logo)
+        textMovieName.text = movie.title
+        textViewDescription.text = movie.overview
     }
 }

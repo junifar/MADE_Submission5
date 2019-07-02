@@ -4,20 +4,20 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Movie (
-    val name: String?,
-    val description: String?,
-    val imageUrl: Int
+    val title: String?,
+    val overview: String?,
+    val poster_path: String?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString(),
-        parcel.readInt()
+        parcel.readString()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(name)
-        parcel.writeString(description)
-        parcel.writeInt(imageUrl)
+        parcel.writeString(title)
+        parcel.writeString(overview)
+        parcel.writeString(poster_path)
     }
 
     override fun describeContents(): Int {
