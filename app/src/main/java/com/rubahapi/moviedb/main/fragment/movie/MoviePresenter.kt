@@ -18,7 +18,7 @@ class MoviePresenter(private val view: MovieView,
     fun getMovie(){
         view.showLoading()
         GlobalScope.launch(Dispatchers.Main) {
-            val data = gson.fromJson(apiRepository.doRequest(TheMovieDbApi.getMovieList()), MovieResponse::class.java)
+            val data = gson.fromJson(apiRepository.doRequest(TheMovieDbApi.getMovieList()).await(), MovieResponse::class.java)
             view.showMovie(data.movies)
             view.hideLoading()
         }

@@ -2,8 +2,10 @@ package com.rubahapi.moviedb.main.fragment.movie
 
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -31,17 +33,35 @@ class MovieFragment : Fragment(), MovieView {
     private fun initComponent(){
         progressBar = activity?.findViewById(R.id.progressBar) as ProgressBar
         swipeRefresh = activity?.findViewById(R.id.swipe_refresh_layout) as SwipeRefreshLayout
-        adapter = MovieAdapter(items){}
+
+        swipeRefresh.setColorSchemeColors(ContextCompat.getColor(context!!, android.R.color.holo_green_dark))
+
+        adapter = MovieAdapter(context!!, items){
+            val intent = Intent(activity, DetailMovieActivity::class.java)
+            intent.putExtra(
+                DetailMovieActivity.EXTRA_DETAIL_ACTIVITY_TYPE,
+                DetailMovieActivity.EXTRA_DETAIL_MOVIE
+            )
+            intent.putExtra(DetailMovieActivity.EXTRA_DETAIL_MOVIE, it)
+            startActivity(intent)
+        }
         list.adapter = adapter
 
         val request = ApiRepository()
         val gson = Gson()
         presenter = MoviePresenter(this, request, gson)
+        onAttachView()
         presenter.getMovie()
 
         swipeRefresh.setOnRefreshListener {
             presenter.getMovie()
+            swipeRefresh.isRefreshing = false
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        onDetachView()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -57,31 +77,10 @@ class MovieFragment : Fragment(), MovieView {
         val view = inflater.inflate(R.layout.fragment_movie, container, false)
         list = view.findViewById(R.id.recycler_view_movie)
 
-        generateData()
-
         list.layoutManager = LinearLayoutManager(context)
-//        list.adapter = MovieAdapter(context, items){
-//            val intent = Intent(activity, DetailMovieActivity::class.java)
-//            intent.putExtra(
-//                DetailMovieActivity.EXTRA_DETAIL_ACTIVITY_TYPE,
-//                DetailMovieActivity.EXTRA_DETAIL_MOVIE
-//            )
-//            intent.putExtra(DetailMovieActivity.EXTRA_DETAIL_MOVIE, it)
-//            startActivity(intent)
-//        }
+
         return view
 
-    }
-
-    private fun generateData(){
-        val dataName = resources.getStringArray(R.array.movie_name)
-        val dataDescription = resources.getStringArray(R.array.movie_description)
-        val dataImage = resources.obtainTypedArray(R.array.movie_photo)
-        items.clear()
-        for (i in 0 until dataName.size-1){
-            items.add(Movie(dataName[i], dataDescription[i], dataImage.getResourceId(i, -1)))
-        }
-        dataImage.recycle()
     }
 
     override fun showLoading() {
@@ -90,10 +89,6 @@ class MovieFragment : Fragment(), MovieView {
 
     override fun hideLoading() {
         progressBar.invisible()
-    }
-
-    override fun showBlankData() {
-        swipeRefresh.isRefreshing = false
     }
 
     override fun onAttachView() {
