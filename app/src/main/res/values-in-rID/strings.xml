@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Katalog Film</string>
+    <string name="tab_movie">FILM</string>
+    <string name="tab_tv_show">Acara TV</string>
+    <string name="image_logo">Logo</string>
+    <string name="change_language_settings">Pilih Pengaturan Bahasa</string>
+    <string name="movie_description">Deskripsi</string>
+</resources>
