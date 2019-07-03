@@ -60,8 +60,8 @@ class MovieFragment : Fragment(), MovieView {
     }
 
     override fun onDestroy() {
-        onDetachView()
         super.onDestroy()
+        onDetachView()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

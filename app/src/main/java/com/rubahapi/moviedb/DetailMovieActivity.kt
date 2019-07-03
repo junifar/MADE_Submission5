@@ -48,9 +48,10 @@ class DetailMovieActivity : AppCompatActivity() {
         val textMovieName = findViewById<TextView>(R.id.textMovieName)
         val textViewDescription = findViewById<TextView>(R.id.textViewDescription)
 
-        image_logo.setImageResource(tvShow.imageUrl)
+        Glide.with(this).load("https://image.tmdb.org/t/p/w370_and_h556_bestv2${tvShow.poster_path}")
+            .into(image_logo)
         textMovieName.text = tvShow.name
-        textViewDescription.text = tvShow.description
+        textViewDescription.text = tvShow.overview
     }
 
     fun detailMovieInit(){

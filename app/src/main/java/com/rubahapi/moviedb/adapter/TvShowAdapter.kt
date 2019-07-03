@@ -7,10 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.rubahapi.moviedb.R
 import com.rubahapi.moviedb.model.TvShow
 
-class TvShowAdapter(private val context: Context?, private val items: List<TvShow>, private val listener: (TvShow) -> Unit):
+class TvShowAdapter(private val context: Context, private val items: List<TvShow>, private val listener: (TvShow) -> Unit):
     RecyclerView.Adapter<TvShowAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(LayoutInflater.from(context).inflate(
@@ -18,18 +19,19 @@ class TvShowAdapter(private val context: Context?, private val items: List<TvSho
 
     override fun getItemCount() = items.size
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bindItem(items[position], listener)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bindItem(context, items[position], listener)
 
 
     class ViewHolder(view: View):RecyclerView.ViewHolder(view){
         private val name = view.findViewById<TextView>(R.id.listview_item_title)
         private val description = view.findViewById<TextView>(R.id.listview_item_short_description)
-        private val image_path = view.findViewById<ImageView>(R.id.image_logo)
+        private val imagePath = view.findViewById<ImageView>(R.id.image_logo)
 
-        fun bindItem(items: TvShow, listener: (TvShow) -> Unit){
+        fun bindItem(context: Context, items: TvShow, listener: (TvShow) -> Unit){
             name.text = items.name
-            description.text = items.description
-            image_path.setImageResource(items.imageUrl)
+            description.text = items.overview
+            Glide.with(context).load("https://image.tmdb.org/t/p/w370_and_h556_bestv2${items.poster_path}")
+                .into(imagePath)
             itemView.setOnClickListener{listener(items)}
         }
     }

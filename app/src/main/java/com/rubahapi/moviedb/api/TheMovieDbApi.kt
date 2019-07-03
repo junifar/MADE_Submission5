@@ -7,4 +7,8 @@ object TheMovieDbApi {
     fun getMovieList(): String {
         return "$BASE_URL/discover/movie?api_key=$TMDB_API_KEY&language=en-US"
     }
+
+    fun getTvShowList():String{
+        return "$BASE_URL/discover/tv?api_key=$TMDB_API_KEY&language=en-US"
+    }
 }
