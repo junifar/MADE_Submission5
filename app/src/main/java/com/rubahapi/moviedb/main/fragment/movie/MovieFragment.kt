@@ -23,14 +23,19 @@ import com.rubahapi.moviedb.util.invisible
 import com.rubahapi.moviedb.util.visible
 
 class MovieFragment : Fragment(), MovieView {
-    private var items: MutableList<Movie> = mutableListOf()
-    lateinit var adapter: MovieAdapter
-    lateinit var progressBar: ProgressBar
-    lateinit var presenter: MoviePresenter
-    lateinit var swipeRefresh: SwipeRefreshLayout
-    lateinit var list:RecyclerView
+    private var items: ArrayList<Movie> = arrayListOf()
+    private lateinit var adapter: MovieAdapter
+    private lateinit var progressBar: ProgressBar
+    private lateinit var presenter: MoviePresenter
+    private lateinit var swipeRefresh: SwipeRefreshLayout
+    private lateinit var list:RecyclerView
 
-    private fun initComponent(){
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelableArrayList(ITEM_DATA_SAVED, items)
+    }
+
+    private fun initComponent(savedInstanceState: Bundle?){
         progressBar = activity?.findViewById(R.id.progressBar) as ProgressBar
         swipeRefresh = activity?.findViewById(R.id.swipe_refresh_layout) as SwipeRefreshLayout
 
@@ -51,13 +56,25 @@ class MovieFragment : Fragment(), MovieView {
         val gson = Gson()
         presenter = MoviePresenter(this, request, gson)
         onAttachView()
-        presenter.getMovie()
+
+        if (savedInstanceState == null){
+            presenter.getMovie()
+        }else{
+            items.clear()
+            savedInstanceState.getParcelableArrayList<Movie>(ITEM_DATA_SAVED).forEach {
+                movie ->
+                items.add(movie)
+            }
+            adapter.notifyDataSetChanged()
+        }
 
         swipeRefresh.setOnRefreshListener {
             presenter.getMovie()
             swipeRefresh.isRefreshing = false
         }
     }
+
+
 
     override fun onDestroy() {
         super.onDestroy()
@@ -66,7 +83,7 @@ class MovieFragment : Fragment(), MovieView {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        initComponent()
+        initComponent(savedInstanceState)
     }
 
     override fun onCreateView(
@@ -107,6 +124,7 @@ class MovieFragment : Fragment(), MovieView {
     }
 
     companion object{
+        const val ITEM_DATA_SAVED = "itemsData"
         @JvmStatic
         fun newInstance(): MovieFragment {
             return MovieFragment().apply {

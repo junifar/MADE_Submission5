@@ -14,23 +14,26 @@ import android.widget.ProgressBar
 import com.google.gson.Gson
 import com.rubahapi.moviedb.DetailMovieActivity
 import com.rubahapi.moviedb.R
-import com.rubahapi.moviedb.adapter.MovieAdapter
 import com.rubahapi.moviedb.adapter.TvShowAdapter
 import com.rubahapi.moviedb.api.ApiRepository
-import com.rubahapi.moviedb.main.fragment.movie.MoviePresenter
 import com.rubahapi.moviedb.model.TvShow
 import com.rubahapi.moviedb.util.invisible
 import com.rubahapi.moviedb.util.visible
 
 class TvShowFragment : Fragment(), TVShowView {
-    private var items: MutableList<TvShow> = mutableListOf()
-    lateinit var adapter: TvShowAdapter
-    lateinit var progressBar: ProgressBar
-    lateinit var presenter: TvShowPresenter
-    lateinit var swipeRefresh: SwipeRefreshLayout
-    lateinit var list:RecyclerView
+    private var items: ArrayList<TvShow> = arrayListOf()
+    private lateinit var adapter: TvShowAdapter
+    private lateinit var progressBar: ProgressBar
+    private lateinit var presenter: TvShowPresenter
+    private lateinit var swipeRefresh: SwipeRefreshLayout
+    private lateinit var list:RecyclerView
 
-    private fun initComponent(){
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelableArrayList(ITEM_DATA_SAVED, items)
+    }
+
+    private fun initComponent(savedInstanceState: Bundle?){
         val request = ApiRepository()
         val gson = Gson()
         progressBar = activity?.findViewById(R.id.progressBar) as ProgressBar
@@ -48,7 +51,17 @@ class TvShowFragment : Fragment(), TVShowView {
 
         presenter = TvShowPresenter(this, request, gson)
         onAttachView()
-        presenter.getTvShow()
+
+        if(savedInstanceState == null){
+            presenter.getTvShow()
+        }else{
+            items.clear()
+            savedInstanceState.getParcelableArrayList<TvShow>(ITEM_DATA_SAVED).forEach {
+                tvShow->
+                items.add(tvShow)
+            }
+            adapter.notifyDataSetChanged()
+        }
 
         swipeRefresh.setOnRefreshListener {
             presenter.getTvShow()
@@ -63,7 +76,7 @@ class TvShowFragment : Fragment(), TVShowView {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        initComponent()
+        initComponent(savedInstanceState)
     }
 
     override fun onCreateView(
@@ -102,6 +115,7 @@ class TvShowFragment : Fragment(), TVShowView {
     }
 
     companion object{
+        const val ITEM_DATA_SAVED = "itemsData"
         @JvmStatic
         fun newInstance(): TvShowFragment {
             return TvShowFragment().apply {
