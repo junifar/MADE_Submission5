@@ -44,17 +44,17 @@ class DetailMovieActivity : AppCompatActivity() {
     private fun detailTvShowInit(){
         val tvShow = intent.getParcelableExtra<TvShow>(EXTRA_DETAIL_TV_SHOW)
 
-        val image_logo = findViewById<ImageView>(R.id.image_logo)
+        val imageLogo = findViewById<ImageView>(R.id.image_logo)
         val textMovieName = findViewById<TextView>(R.id.textMovieName)
         val textViewDescription = findViewById<TextView>(R.id.textViewDescription)
 
         Glide.with(this).load("https://image.tmdb.org/t/p/w370_and_h556_bestv2${tvShow.poster_path}")
-            .into(image_logo)
+            .into(imageLogo)
         textMovieName.text = tvShow.name
         textViewDescription.text = tvShow.overview
     }
 
-    fun detailMovieInit(){
+    private fun detailMovieInit(){
         val movie = intent.getParcelableExtra<Movie>(EXTRA_DETAIL_MOVIE)
 
         val image_logo = findViewById<ImageView>(R.id.image_logo)

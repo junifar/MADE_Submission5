@@ -41,14 +41,17 @@ class MovieFragment : Fragment(), MovieView {
 
         swipeRefresh.setColorSchemeColors(ContextCompat.getColor(context!!, android.R.color.holo_green_dark))
 
-        adapter = MovieAdapter(context!!, items){
-            val intent = Intent(activity, DetailMovieActivity::class.java)
-            intent.putExtra(
-                DetailMovieActivity.EXTRA_DETAIL_ACTIVITY_TYPE,
-                DetailMovieActivity.EXTRA_DETAIL_MOVIE
-            )
-            intent.putExtra(DetailMovieActivity.EXTRA_DETAIL_MOVIE, it)
-            startActivity(intent)
+        val context = this.context
+        if(context != null){
+            adapter = MovieAdapter(context, items){
+                val intent = Intent(activity, DetailMovieActivity::class.java)
+                intent.putExtra(
+                    DetailMovieActivity.EXTRA_DETAIL_ACTIVITY_TYPE,
+                    DetailMovieActivity.EXTRA_DETAIL_MOVIE
+                )
+                intent.putExtra(DetailMovieActivity.EXTRA_DETAIL_MOVIE, it)
+                startActivity(intent)
+            }
         }
         list.adapter = adapter
 

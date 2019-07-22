@@ -15,6 +15,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3\""
         buildConfigField "String", "TMDB_API_KEY", "\"311c35d7efd9fb82761b88adc22ddd89\""
+        buildConfigField "String", "IMAGE_LINK_URL", "\"https://image.tmdb.org/t/p/w370_and_h556_bestv2\""
     }
     buildTypes {
         release {

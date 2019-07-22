@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.rubahapi.moviedb.BuildConfig.IMAGE_LINK_URL
 import com.rubahapi.moviedb.R
 import com.rubahapi.moviedb.model.TvShow
 
@@ -30,7 +31,7 @@ class TvShowAdapter(private val context: Context, private val items: List<TvShow
         fun bindItem(context: Context, items: TvShow, listener: (TvShow) -> Unit){
             name.text = items.name
             description.text = items.overview
-            Glide.with(context).load("https://image.tmdb.org/t/p/w370_and_h556_bestv2${items.poster_path}")
+            Glide.with(context).load("$IMAGE_LINK_URL${items.poster_path}")
                 .into(imagePath)
             itemView.setOnClickListener{listener(items)}
         }
