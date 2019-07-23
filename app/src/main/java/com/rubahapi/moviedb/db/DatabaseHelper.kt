@@ -9,7 +9,7 @@ public class DatabaseHelper(context: Context): SQLiteOpenHelper(context, DATABAS
     companion object{
         val DATABASE_NAME = "movie_catalogue_db"
         val DATABASE_VERSION = 1
-        val SQL_CREATE_TABLE = "CREATE TABLE ${MovieCatalogueDB.TABLE_MOVIE} " +
+        val SQL_CREATE_TABLE_MOVIE = "CREATE TABLE ${MovieCatalogueDB.TABLE_MOVIE} " +
                 "(${MovieCatalogueDB.MovieColumns._ID} INTEGER PRIMARY_KEY AUTONCREEMENT, " +
                 "${MovieCatalogueDB.MovieColumns.TITLE} TEXT NOT NULL, " +
                 "${MovieCatalogueDB.MovieColumns.OVERVIEW} TEXT NOT NULL, " +
@@ -17,10 +17,11 @@ public class DatabaseHelper(context: Context): SQLiteOpenHelper(context, DATABAS
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        db?.execSQL(SQL_CREATE_TABLE_MOVIE)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        db?.execSQL("DROP TABLE IF EXISTS ${MovieCatalogueDB.TABLE_MOVIE}")
+        onCreate(db)
     }
 }
