@@ -5,4 +5,5 @@
     <string name="image_logo">Logo</string>
     <string name="change_language_settings">Pilih Pengaturan Bahasa</string>
     <string name="movie_description">Deskripsi</string>
+    <string name="favorites">Favorites</string>
 </resources>

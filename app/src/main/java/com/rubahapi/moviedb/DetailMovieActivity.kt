@@ -2,9 +2,12 @@ package com.rubahapi.moviedb
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.rubahapi.moviedb.model.Movie
 import com.rubahapi.moviedb.model.TvShow
@@ -15,6 +18,23 @@ class DetailMovieActivity : AppCompatActivity() {
         const val EXTRA_DETAIL_MOVIE = "DetailMovies"
         const val EXTRA_DETAIL_TV_SHOW = "DetailTVShow"
         const val EXTRA_DETAIL_ACTIVITY_TYPE = "DetailActovotyType"
+    }
+
+    private var menuItem: Menu? = null
+    private var isFavorite: Boolean = false
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.detail_movie_menu, menu)
+        menuItem = menu
+        setFavorite()
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun setFavorite() {
+        if (isFavorite)
+            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_added_to_favorites)
+        else
+            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_add_to_favorites)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,12 +48,27 @@ class DetailMovieActivity : AppCompatActivity() {
 
     }
 
+    private fun removeFromFavorite(){
+        Toast.makeText(this, "Removed from favorite",Toast.LENGTH_SHORT).show()
+    }
+
+    private fun addToFavorite(){
+        Toast.makeText(this, "Added to favorite",Toast.LENGTH_SHORT).show()
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
 
             android.R.id.home -> {
                 onBackPressed()
+                return true
+            }
+
+            R.id.add_to_favorite -> {
+                if (isFavorite) removeFromFavorite() else addToFavorite()
+
+                isFavorite = !isFavorite
+                setFavorite()
                 return true
             }
         }
