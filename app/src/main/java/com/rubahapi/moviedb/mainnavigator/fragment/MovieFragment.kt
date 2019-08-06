@@ -27,11 +27,12 @@ class MovieFragment: Fragment(){
 
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
         toolbar.inflateMenu(R.menu.main_menu)
+        setHasOptionsMenu(true)
         return viewLayout
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, menuInflater: MenuInflater?) {
-        menuInflater?.inflate(R.menu.main_menu, menu)
+    override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.main_menu, menu)
         super.onCreateOptionsMenu(menu, menuInflater)
     }
 
