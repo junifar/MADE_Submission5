@@ -29,12 +29,11 @@ class FavoriteFragment : Fragment() {
         val tabs: TabLayout = viewLayout.findViewById(R.id.tabs)
         tabs.setupWithViewPager(viewPager)
 
-        (activity as AppCompatActivity).title = "Your Favorite Movie"
-
         val toolbar = viewLayout.findViewById<android.support.v7.widget.Toolbar>(R.id.main_toolbar)
-
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
         toolbar.inflateMenu(R.menu.main_menu)
+
+        (activity as AppCompatActivity).title = "Your Favorite Movie"
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
         setHasOptionsMenu(true)
         return viewLayout
     }
