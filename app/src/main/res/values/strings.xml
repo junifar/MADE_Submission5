@@ -6,4 +6,10 @@
     <string name="change_language_settings">Choose Languange Setting</string>
     <string name="movie_description">Description</string>
     <string name="favorites">Favorites</string>
+    <string name="title_movie">Movie</string>
+    <string name="title_favorite">Favorite</string>
+    <string name="title_activity_main_navigator">MainActivityNavigator</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>
