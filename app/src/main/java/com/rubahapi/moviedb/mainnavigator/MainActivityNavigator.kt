@@ -5,40 +5,38 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import com.rubahapi.moviedb.R
+import com.rubahapi.moviedb.mainnavigator.fragment.FavoriteFragment
 import com.rubahapi.moviedb.mainnavigator.fragment.MovieFragment
 
 class MainActivityNavigator : AppCompatActivity() {
 
     private  var savedInstanceState:Bundle = Bundle()
-    private lateinit var textMessage: TextView
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_movie -> {
-//                textMessage.setText(R.string.title_home)
-                loadMovieFragment(savedInstanceState)
+                loadMovieFragment()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_favorite -> {
-//                textMessage.setText(R.string.title_dashboard)
+                loadFavoriteFragment()
                 return@OnNavigationItemSelectedListener true
             }
         }
         false
     }
 
-    fun loadMovieFragment(savedInstanceState: Bundle?){
-        if (savedInstanceState == null){
+    private fun loadMovieFragment() {
             val fragment = MovieFragment()
             supportFragmentManager.beginTransaction()
                 .replace(R.id.home_container, fragment, MovieFragment::class.java.simpleName)
                 .commit()
-        }
     }
 
-    fun loadFavoriteFragment(savedInstanceState: Bundle?){
-        if (savedInstanceState == null){
-
-        }
+    private fun loadFavoriteFragment() {
+            val fragment = FavoriteFragment()
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.home_container, fragment, FavoriteFragment::class.java.simpleName)
+                .commit()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,8 +48,7 @@ class MainActivityNavigator : AppCompatActivity() {
             this.savedInstanceState = savedInstanceState
         }
 
-        loadMovieFragment(savedInstanceState)
-//        textMessage = findViewById(R.id.message)
+        loadMovieFragment()
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
     }
 }
