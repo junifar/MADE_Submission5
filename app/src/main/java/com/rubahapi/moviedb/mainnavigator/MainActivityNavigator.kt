@@ -3,9 +3,8 @@ package com.rubahapi.moviedb.mainnavigator
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
-import android.widget.TextView
 import com.rubahapi.moviedb.R
-import com.rubahapi.moviedb.mainnavigator.fragment.FavoriteFragment
+import com.rubahapi.moviedb.mainnavigator.fragment.favorite.FavoriteFragment
 import com.rubahapi.moviedb.mainnavigator.fragment.MovieFragment
 
 class MainActivityNavigator : AppCompatActivity() {
