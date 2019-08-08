@@ -20,13 +20,13 @@ class MovieHelper(context: Context) {
     private val databaseTable = TABLE_MOVIE
 
     fun getInstance(context: Context): MovieHelper{
-        if (instance == null){
+//        if (instance == null){
             synchronized(SQLiteOpenHelper::class){
-                if(instance == null){
+//                if(instance == null){
                     instance = MovieHelper(context)
-                }
+//                }
             }
-        }
+//        }
         return  instance
     }
 
@@ -91,3 +91,6 @@ class MovieHelper(context: Context) {
         return database.delete(databaseTable, "$_ID = $id", null)
     }
 }
+
+val Context.database: MovieHelper
+get() = MovieHelper(applicationContext).getInstance(applicationContext)
