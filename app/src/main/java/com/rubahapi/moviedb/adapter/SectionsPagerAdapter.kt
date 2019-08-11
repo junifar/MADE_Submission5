@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import com.rubahapi.moviedb.main.fragment.movie.MovieFragment
-import com.rubahapi.moviedb.main.fragment.tvshow.TvShowFragment
 import com.rubahapi.moviedb.R
+import com.rubahapi.moviedb.main.fragment.tvshow.TvShowFragment
 
 private val TAB_TITLES = arrayOf(
     R.string.tab_movie,

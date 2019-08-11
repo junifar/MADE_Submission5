@@ -13,10 +13,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class TvShowPresenter(private val view: TVShowView,
-                      private val apiRepository: ApiRepository,
-                      private val gson: Gson
-                     ): TvShowPresenterView<TvShowFragment> {
+class FavoriteTvShowPresenter(private val view: FavoriteTVShowView,
+                              private val apiRepository: ApiRepository,
+                              private val gson: Gson
+                     ): FavoriteTvShowPresenterView<FavoriteTvShowFragment> {
     private var mView: Fragment? = null
 
     private val handler = CoroutineExceptionHandler { _, exception ->
@@ -36,7 +36,7 @@ class TvShowPresenter(private val view: TVShowView,
         }
     }
 
-    override fun onAttach(view: TvShowFragment) {
+    override fun onAttach(view: FavoriteTvShowFragment) {
         mView = view
     }
 

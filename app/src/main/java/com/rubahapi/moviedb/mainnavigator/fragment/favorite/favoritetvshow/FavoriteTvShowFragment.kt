@@ -20,11 +20,11 @@ import com.rubahapi.moviedb.model.TvShow
 import com.rubahapi.moviedb.util.invisible
 import com.rubahapi.moviedb.util.visible
 
-class TvShowFragment : Fragment(), TVShowView {
+class FavoriteTvShowFragment : Fragment(), FavoriteTVShowView {
     private var items: ArrayList<TvShow> = arrayListOf()
     private lateinit var adapter: TvShowAdapter
     private lateinit var progressBar: ProgressBar
-    private lateinit var presenter: TvShowPresenter
+    private lateinit var presenter: FavoriteTvShowPresenter
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var list:RecyclerView
 
@@ -49,11 +49,11 @@ class TvShowFragment : Fragment(), TVShowView {
         }
         list.adapter = adapter
 
-        presenter = TvShowPresenter(this, request, gson)
+        presenter = FavoriteTvShowPresenter(this, request, gson)
         onAttachView()
 
         if(savedInstanceState == null){
-            presenter.getTvShow()
+//            presenter.getTvShow()
         }else{
             items.clear()
             savedInstanceState.getParcelableArrayList<TvShow>(ITEM_DATA_SAVED).forEach {
