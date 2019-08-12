@@ -16,6 +16,7 @@ import com.rubahapi.moviedb.DetailMovieActivity
 import com.rubahapi.moviedb.R
 import com.rubahapi.moviedb.adapter.TvShowAdapter
 import com.rubahapi.moviedb.api.ApiRepository
+import com.rubahapi.moviedb.db.MovieHelper
 import com.rubahapi.moviedb.model.TvShow
 import com.rubahapi.moviedb.util.invisible
 import com.rubahapi.moviedb.util.visible
@@ -31,6 +32,16 @@ class FavoriteTvShowFragment : Fragment(), FavoriteTVShowView {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putParcelableArrayList(ITEM_DATA_SAVED, items)
+    }
+
+    private fun getTvShowDB():List<TvShow>{
+        val database = MovieHelper(this.requireContext())
+        val movieHelper = database.getInstance(this.requireContext())
+        movieHelper.open()
+        val result = movieHelper.getAllTvShow()
+        movieHelper.close()
+        println(result)
+        return result
     }
 
     private fun initComponent(savedInstanceState: Bundle?){
@@ -53,7 +64,15 @@ class FavoriteTvShowFragment : Fragment(), FavoriteTVShowView {
         onAttachView()
 
         if(savedInstanceState == null){
-            this.context?.let { presenter.getTvShow(it) }
+//            this.context?.let { presenter.getTvShow(it) }
+            val result = getTvShowDB()
+            if (result == null){
+                var data = mutableListOf<TvShow>()
+                data.add(TvShow("No Data Show","",""))
+                showTvShow(data)
+            }else{
+                showTvShow(result)
+            }
         }else{
             items.clear()
             savedInstanceState.getParcelableArrayList<TvShow>(ITEM_DATA_SAVED).forEach {
@@ -64,7 +83,8 @@ class FavoriteTvShowFragment : Fragment(), FavoriteTVShowView {
         }
 
         swipeRefresh.setOnRefreshListener {
-            presenter.getTvShow(this.requireContext())
+            val result = getTvShowDB()
+            showTvShow(result)
             swipeRefresh.isRefreshing = false
         }
     }

@@ -22,6 +22,8 @@ class DetailMovieActivity : AppCompatActivity() {
         const val EXTRA_DETAIL_ACTIVITY_TYPE = "DetailActovotyType"
     }
 
+    lateinit var movie: Movie
+    lateinit var tvShow: TvShow
     private var menuItem: Menu? = null
     private var isFavorite: Boolean = false
 
@@ -55,12 +57,17 @@ class DetailMovieActivity : AppCompatActivity() {
     }
 
     private fun addToFavorite(){
-        val tvShow = TvShow("a", "a", "a")
-        val movieHelper = database.getInstance(this.applicationContext)
-        movieHelper.open()
-        val result = movieHelper.insertTvShow(tvShow)
-        movieHelper.close()
-        println(result)
+        when (intent.getStringExtra(EXTRA_DETAIL_ACTIVITY_TYPE)){
+            EXTRA_DETAIL_MOVIE -> println("Not Implemented yet")
+            else ->{
+                val tvShow = TvShow(tvShow.name, tvShow.overview, tvShow.poster_path)
+                val movieHelper = database.getInstance(this.applicationContext)
+                movieHelper.open()
+                val result = movieHelper.insertTvShow(tvShow)
+                movieHelper.close()
+                println(result)
+            }
+        }
         Toast.makeText(this, "Added to favorite",Toast.LENGTH_SHORT).show()
     }
 
@@ -85,7 +92,7 @@ class DetailMovieActivity : AppCompatActivity() {
     }
 
     private fun detailTvShowInit(){
-        val tvShow = intent.getParcelableExtra<TvShow>(EXTRA_DETAIL_TV_SHOW)
+        tvShow = intent.getParcelableExtra(EXTRA_DETAIL_TV_SHOW)
 
         val imageLogo = findViewById<ImageView>(R.id.image_logo)
         val textMovieName = findViewById<TextView>(R.id.textMovieName)
@@ -98,7 +105,7 @@ class DetailMovieActivity : AppCompatActivity() {
     }
 
     private fun detailMovieInit(){
-        val movie = intent.getParcelableExtra<Movie>(EXTRA_DETAIL_MOVIE)
+        movie = intent.getParcelableExtra(EXTRA_DETAIL_MOVIE)
 
         val image_logo = findViewById<ImageView>(R.id.image_logo)
         val textMovieName = findViewById<TextView>(R.id.textMovieName)
