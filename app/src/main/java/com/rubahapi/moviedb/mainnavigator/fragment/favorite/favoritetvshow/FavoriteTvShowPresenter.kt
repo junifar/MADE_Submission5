@@ -1,11 +1,13 @@
 package com.rubahapi.moviedb.main.fragment.tvshow
 
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.support.v4.app.Fragment
 import android.util.Log
 import com.google.gson.Gson
 import com.rubahapi.moviedb.api.ApiRepository
 import com.rubahapi.moviedb.api.TheMovieDbApi
+import com.rubahapi.moviedb.db.MovieHelper
 import com.rubahapi.moviedb.model.TvShow
 import com.rubahapi.moviedb.model.TvShowResponse
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -27,8 +29,14 @@ class FavoriteTvShowPresenter(private val view: FavoriteTVShowView,
         view.hideLoading()
     }
 
-    fun getTvShow(){
+    fun getTvShow(context:Context){
         view.showLoading()
+        val database = MovieHelper(context)
+        val movieHelper = database.getInstance(context)
+        movieHelper.open()
+        val result = movieHelper.getAllMovie()
+        movieHelper.close()
+
         GlobalScope.launch(Dispatchers.Main + handler) {
             val data = gson.fromJson(apiRepository.doRequest(TheMovieDbApi.getTvShowList()).await(), TvShowResponse::class.java)
             view.showTvShow(data.tvShows)

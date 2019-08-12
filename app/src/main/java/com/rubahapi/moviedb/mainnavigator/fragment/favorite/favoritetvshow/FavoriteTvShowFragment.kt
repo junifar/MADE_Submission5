@@ -53,7 +53,7 @@ class FavoriteTvShowFragment : Fragment(), FavoriteTVShowView {
         onAttachView()
 
         if(savedInstanceState == null){
-//            presenter.getTvShow()
+            presenter.getTvShow()
         }else{
             items.clear()
             savedInstanceState.getParcelableArrayList<TvShow>(ITEM_DATA_SAVED).forEach {
