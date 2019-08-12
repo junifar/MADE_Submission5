@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.rubahapi.moviedb.db.Tvshow
 import com.rubahapi.moviedb.db.database
 import com.rubahapi.moviedb.model.Movie
 import com.rubahapi.moviedb.model.TvShow
@@ -54,10 +55,10 @@ class DetailMovieActivity : AppCompatActivity() {
     }
 
     private fun addToFavorite(){
-        val movie = Movie("Test", "uji", "aa")
+        val tvShow = TvShow("a", "a", "a")
         val movieHelper = database.getInstance(this.applicationContext)
         movieHelper.open()
-        val result = movieHelper.insertMovie(movie)
+        val result = movieHelper.insertTvShow(tvShow)
         movieHelper.close()
         println(result)
         Toast.makeText(this, "Added to favorite",Toast.LENGTH_SHORT).show()

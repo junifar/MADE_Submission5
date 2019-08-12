@@ -53,7 +53,7 @@ class FavoriteTvShowFragment : Fragment(), FavoriteTVShowView {
         onAttachView()
 
         if(savedInstanceState == null){
-            presenter.getTvShow()
+            this.context?.let { presenter.getTvShow(it) }
         }else{
             items.clear()
             savedInstanceState.getParcelableArrayList<TvShow>(ITEM_DATA_SAVED).forEach {
@@ -64,7 +64,7 @@ class FavoriteTvShowFragment : Fragment(), FavoriteTVShowView {
         }
 
         swipeRefresh.setOnRefreshListener {
-            presenter.getTvShow()
+            presenter.getTvShow(this.requireContext())
             swipeRefresh.isRefreshing = false
         }
     }

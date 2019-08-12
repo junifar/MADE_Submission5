@@ -117,8 +117,8 @@ class TvShowFragment : Fragment(), TVShowView {
     companion object{
         const val ITEM_DATA_SAVED = "itemsData"
         @JvmStatic
-        fun newInstance(): FavoriteTvShowFragment {
-            return FavoriteTvShowFragment().apply {
+        fun newInstance(): TvShowFragment {
+            return TvShowFragment().apply {
                 arguments = Bundle().apply {}
             }
         }

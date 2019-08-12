@@ -21,27 +21,29 @@ class FavoriteTvShowPresenter(private val view: FavoriteTVShowView,
                      ): FavoriteTvShowPresenterView<FavoriteTvShowFragment> {
     private var mView: Fragment? = null
 
-    private val handler = CoroutineExceptionHandler { _, exception ->
-        Log.d(TAG, "$exception handled !")
-        val listData = mutableListOf<TvShow>()
-        listData.add(TvShow("No Connection Detected", "", ""))
-        view.showTvShow(listData)
-        view.hideLoading()
-    }
+//    private val handler = CoroutineExceptionHandler { _, exception ->
+//        Log.d(TAG, "$exception handled !")
+//        val listData = mutableListOf<TvShow>()
+//        listData.add(TvShow("No Connection Detected", "", ""))
+//        view.showTvShow(listData)
+//        view.hideLoading()
+//    }
 
     fun getTvShow(context:Context){
         view.showLoading()
         val database = MovieHelper(context)
         val movieHelper = database.getInstance(context)
         movieHelper.open()
-        val result = movieHelper.getAllMovie()
+        val result = movieHelper.getAllTvShow()
         movieHelper.close()
 
-        GlobalScope.launch(Dispatchers.Main + handler) {
-            val data = gson.fromJson(apiRepository.doRequest(TheMovieDbApi.getTvShowList()).await(), TvShowResponse::class.java)
-            view.showTvShow(data.tvShows)
-            view.hideLoading()
-        }
+        view.showTvShow(result)
+        view.hideLoading()
+//        GlobalScope.launch(Dispatchers.Main + handler) {
+//            val data = gson.fromJson(apiRepository.doRequest(TheMovieDbApi.getTvShowList()).await(), TvShowResponse::class.java)
+//            view.showTvShow(data.tvShows)
+//            view.hideLoading()
+//        }
     }
 
     override fun onAttach(view: FavoriteTvShowFragment) {
