@@ -26,7 +26,7 @@ class MoviePresenter(private val view: MovieView,
     private val handler = CoroutineExceptionHandler { _, exception ->
         Log.d(TAG, "$exception handled !")
         val listData = mutableListOf<Movie>()
-        listData.add(Movie("No Connection Detected", "",""))
+        listData.add(Movie(0,"No Connection Detected", "",""))
         view.showMovie(listData)
         view.hideLoading()
     }

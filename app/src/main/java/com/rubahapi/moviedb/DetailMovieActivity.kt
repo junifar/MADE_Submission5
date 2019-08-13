@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.rubahapi.moviedb.db.MovieHelper
 import com.rubahapi.moviedb.db.Tvshow
 import com.rubahapi.moviedb.db.database
 import com.rubahapi.moviedb.model.Movie
@@ -53,14 +54,43 @@ class DetailMovieActivity : AppCompatActivity() {
     }
 
     private fun removeFromFavorite(){
+        when (intent.getStringExtra(EXTRA_DETAIL_ACTIVITY_TYPE)){
+            EXTRA_DETAIL_MOVIE -> println("Not Implemented yet")
+            else ->{
+                val movieHelper = database.getInstance(this.applicationContext)
+                movieHelper.open()
+                movieHelper.deleteTvShow(tvShow.id)
+                movieHelper.close()
+            }
+        }
         Toast.makeText(this, "Removed from favorite",Toast.LENGTH_SHORT).show()
+    }
+
+    private fun getTvShowDBByID(id: Int):List<TvShow>{
+        val database = MovieHelper(this.applicationContext)
+        val movieHelper = database.getInstance(this.applicationContext)
+        movieHelper.open()
+        val result = movieHelper.getTvShowByID(id)
+        movieHelper.close()
+        println(result)
+        return result
+    }
+
+    private fun favoriteState(){
+        when (intent.getStringExtra(EXTRA_DETAIL_ACTIVITY_TYPE)){
+            EXTRA_DETAIL_MOVIE -> println("Not Implemented yet")
+            else ->{
+                val tvShowData = getTvShowDBByID(tvShow.id)
+                if(!tvShowData.isEmpty()) isFavorite = true
+            }
+        }
     }
 
     private fun addToFavorite(){
         when (intent.getStringExtra(EXTRA_DETAIL_ACTIVITY_TYPE)){
             EXTRA_DETAIL_MOVIE -> println("Not Implemented yet")
             else ->{
-                val tvShow = TvShow(tvShow.name, tvShow.overview, tvShow.poster_path)
+                val tvShow = TvShow(tvShow.id, tvShow.name, tvShow.overview, tvShow.poster_path)
                 val movieHelper = database.getInstance(this.applicationContext)
                 movieHelper.open()
                 val result = movieHelper.insertTvShow(tvShow)
@@ -93,6 +123,8 @@ class DetailMovieActivity : AppCompatActivity() {
 
     private fun detailTvShowInit(){
         tvShow = intent.getParcelableExtra(EXTRA_DETAIL_TV_SHOW)
+
+        favoriteState()
 
         val imageLogo = findViewById<ImageView>(R.id.image_logo)
         val textMovieName = findViewById<TextView>(R.id.textMovieName)

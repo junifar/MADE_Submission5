@@ -68,7 +68,7 @@ class FavoriteTvShowFragment : Fragment(), FavoriteTVShowView {
             val result = getTvShowDB()
             if (result == null){
                 var data = mutableListOf<TvShow>()
-                data.add(TvShow("No Data Show","",""))
+                data.add(TvShow(0,"No Data Show","",""))
                 showTvShow(data)
             }else{
                 showTvShow(result)

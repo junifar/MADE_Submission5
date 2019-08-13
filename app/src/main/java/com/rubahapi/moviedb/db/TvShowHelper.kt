@@ -59,6 +59,7 @@ class TvShowHelper(context: Context) {
         if (cursor.count > 0){
             while (!cursor.isAfterLast){
                 val tvShow = TvShow(
+                    cursor.getString(cursor.getColumnIndexOrThrow(_ID)).toInt(),
                     cursor.getString(cursor.getColumnIndexOrThrow(TITLE)),
                     cursor.getString(cursor.getColumnIndexOrThrow(OVERVIEW)),
                     cursor.getString(cursor.getColumnIndexOrThrow(POSTER_PATH))

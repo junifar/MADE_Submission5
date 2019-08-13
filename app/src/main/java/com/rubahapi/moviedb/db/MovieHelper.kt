@@ -47,6 +47,34 @@ class MovieHelper(context: Context) {
         if (database.isOpen) database.close()
     }
 
+    fun getTvShowByID(id:Int):ArrayList<TvShow>{
+        val arrayList = arrayListOf<TvShow>()
+        val cursor = database.query(false,
+            databaseTableTvShow,
+            null,
+            "$_ID = $id",
+            null,
+            null,
+            null,
+            "$_ID ASC",
+            null)
+        cursor.moveToFirst()
+        if (cursor.count > 0){
+            while (!cursor.isAfterLast){
+                val tvshow = TvShow(
+                    cursor.getString(cursor.getColumnIndexOrThrow(_ID)).toInt(),
+                    cursor.getString(cursor.getColumnIndexOrThrow(TITLE)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(OVERVIEW)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(POSTER_PATH))
+                )
+                arrayList.add(tvshow)
+                cursor.moveToNext()
+            }
+        }
+        cursor.close()
+        return arrayList
+    }
+
     fun getAllTvShow():ArrayList<TvShow>{
         val arrayList = arrayListOf<TvShow>()
         val cursor = database.query(false,
@@ -62,6 +90,7 @@ class MovieHelper(context: Context) {
         if (cursor.count > 0){
             while (!cursor.isAfterLast){
                 val tvshow = TvShow(
+                    cursor.getString(cursor.getColumnIndexOrThrow(_ID)).toInt(),
                     cursor.getString(cursor.getColumnIndexOrThrow(TITLE)),
                     cursor.getString(cursor.getColumnIndexOrThrow(OVERVIEW)),
                     cursor.getString(cursor.getColumnIndexOrThrow(POSTER_PATH))
@@ -89,6 +118,7 @@ class MovieHelper(context: Context) {
         if (cursor.count > 0){
             while (!cursor.isAfterLast){
                 val movie = Movie(
+                    cursor.getString(cursor.getColumnIndexOrThrow(_ID)).toInt(),
                     cursor.getString(cursor.getColumnIndexOrThrow(TITLE)),
                     cursor.getString(cursor.getColumnIndexOrThrow(OVERVIEW)),
                     cursor.getString(cursor.getColumnIndexOrThrow(POSTER_PATH))
@@ -111,6 +141,7 @@ class MovieHelper(context: Context) {
 
     fun insertTvShow(tvShow: TvShow):Long{
         val args = ContentValues()
+        args.put(_ID, tvShow.id)
         args.put(TITLE, tvShow.name)
         args.put(OVERVIEW, tvShow.overview)
         args.put(POSTER_PATH, tvShow.poster_path)

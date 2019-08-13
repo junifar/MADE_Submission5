@@ -22,7 +22,7 @@ class TvShowPresenter(private val view: TVShowView,
     private val handler = CoroutineExceptionHandler { _, exception ->
         Log.d(TAG, "$exception handled !")
         val listData = mutableListOf<TvShow>()
-        listData.add(TvShow("No Connection Detected", "", ""))
+        listData.add(TvShow(0,"No Connection Detected", "", ""))
         view.showTvShow(listData)
         view.hideLoading()
     }
