@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter
 import com.rubahapi.moviedb.main.fragment.movie.MovieFragment
 import com.rubahapi.moviedb.R
 import com.rubahapi.moviedb.main.fragment.tvshow.FavoriteTvShowFragment
+import com.rubahapi.moviedb.mainnavigator.fragment.favorite.favoritemovie.FavoriteMovieFragment
 
 private val TAB_TITLES = arrayOf(
     R.string.tab_movie,
@@ -20,7 +21,7 @@ class SectionsFavoritePagerAdapter(private val context: Context, fm: FragmentMan
     override fun getItem(position: Int): Fragment {
         this.positionState = position
         return when (position) {
-            0 -> MovieFragment.newInstance()
+            0 -> FavoriteMovieFragment.newInstance()
             else -> FavoriteTvShowFragment.newInstance()
         }
     }
