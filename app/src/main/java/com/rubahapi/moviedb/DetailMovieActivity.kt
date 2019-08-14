@@ -10,7 +10,6 @@ import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.rubahapi.moviedb.db.MovieHelper
-import com.rubahapi.moviedb.db.Tvshow
 import com.rubahapi.moviedb.db.database
 import com.rubahapi.moviedb.model.Movie
 import com.rubahapi.moviedb.model.TvShow
@@ -27,6 +26,9 @@ class DetailMovieActivity : AppCompatActivity() {
     lateinit var tvShow: TvShow
     private var menuItem: Menu? = null
     private var isFavorite: Boolean = false
+//    lateinit var database:MovieHelper
+    lateinit var movieHelper: MovieHelper
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.detail_movie_menu, menu)
@@ -46,6 +48,9 @@ class DetailMovieActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
+        val database = MovieHelper(this.applicationContext)
+        movieHelper = database.getInstance(this.applicationContext)
+
         when (intent.getStringExtra(EXTRA_DETAIL_ACTIVITY_TYPE)){
             EXTRA_DETAIL_MOVIE -> this.detailMovieInit()
             else -> this.detailTvShowInit()
@@ -55,9 +60,12 @@ class DetailMovieActivity : AppCompatActivity() {
 
     private fun removeFromFavorite(){
         when (intent.getStringExtra(EXTRA_DETAIL_ACTIVITY_TYPE)){
-            EXTRA_DETAIL_MOVIE -> println("Not Implemented yet")
+            EXTRA_DETAIL_MOVIE -> {
+                movieHelper.open()
+                movieHelper.deleteMovie(movie.id)
+                movieHelper.close()
+            }
             else ->{
-                val movieHelper = database.getInstance(this.applicationContext)
                 movieHelper.open()
                 movieHelper.deleteTvShow(tvShow.id)
                 movieHelper.close()
@@ -67,8 +75,7 @@ class DetailMovieActivity : AppCompatActivity() {
     }
 
     private fun getTvShowDBByID(id: Int):List<TvShow>{
-        val database = MovieHelper(this.applicationContext)
-        val movieHelper = database.getInstance(this.applicationContext)
+
         movieHelper.open()
         val result = movieHelper.getTvShowByID(id)
         movieHelper.close()
@@ -76,22 +83,39 @@ class DetailMovieActivity : AppCompatActivity() {
         return result
     }
 
+    private fun getMovieDBByID(id: Int):List<Movie>{
+        movieHelper.open()
+        val result = movieHelper.getMovieByID(id)
+        movieHelper.close()
+        println(result)
+        return result
+    }
+
     private fun favoriteState(){
         when (intent.getStringExtra(EXTRA_DETAIL_ACTIVITY_TYPE)){
-            EXTRA_DETAIL_MOVIE -> println("Not Implemented yet")
+            EXTRA_DETAIL_MOVIE -> {
+                val movieData = getMovieDBByID(movie.id)
+                if(movieData.isNotEmpty()) isFavorite = true
+            }
             else ->{
                 val tvShowData = getTvShowDBByID(tvShow.id)
-                if(!tvShowData.isEmpty()) isFavorite = true
+                if(tvShowData.isNotEmpty()) isFavorite = true
             }
         }
     }
 
     private fun addToFavorite(){
         when (intent.getStringExtra(EXTRA_DETAIL_ACTIVITY_TYPE)){
-            EXTRA_DETAIL_MOVIE -> println("Not Implemented yet")
+            EXTRA_DETAIL_MOVIE -> {
+                val movie = Movie(movie.id, movie.title, movie.overview, movie.poster_path)
+                movieHelper.open()
+                val result = movieHelper.insertMovie(movie)
+                movieHelper.close()
+                println(result)
+            }
             else ->{
                 val tvShow = TvShow(tvShow.id, tvShow.name, tvShow.overview, tvShow.poster_path)
-                val movieHelper = database.getInstance(this.applicationContext)
+
                 movieHelper.open()
                 val result = movieHelper.insertTvShow(tvShow)
                 movieHelper.close()
@@ -139,12 +163,14 @@ class DetailMovieActivity : AppCompatActivity() {
     private fun detailMovieInit(){
         movie = intent.getParcelableExtra(EXTRA_DETAIL_MOVIE)
 
-        val image_logo = findViewById<ImageView>(R.id.image_logo)
+        favoriteState()
+
+        val imageLogo = findViewById<ImageView>(R.id.image_logo)
         val textMovieName = findViewById<TextView>(R.id.textMovieName)
         val textViewDescription = findViewById<TextView>(R.id.textViewDescription)
 
         Glide.with(this).load("https://image.tmdb.org/t/p/w370_and_h556_bestv2${movie.poster_path}")
-            .into(image_logo)
+            .into(imageLogo)
         textMovieName.text = movie.title
         textViewDescription.text = movie.overview
     }

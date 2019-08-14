@@ -103,6 +103,34 @@ class MovieHelper(context: Context) {
         return arrayList
     }
 
+    fun getMovieByID(id:Int):ArrayList<Movie>{
+        val arrayList = arrayListOf<Movie>()
+        val cursor = database.query(false,
+            databaseTable,
+            null,
+            "$_ID = $id",
+            null,
+            null,
+            null,
+            "$_ID ASC",
+            null)
+        cursor.moveToFirst()
+        if (cursor.count > 0){
+            while (!cursor.isAfterLast){
+                val movie = Movie(
+                    cursor.getString(cursor.getColumnIndexOrThrow(_ID)).toInt(),
+                    cursor.getString(cursor.getColumnIndexOrThrow(TITLE)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(OVERVIEW)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(POSTER_PATH))
+                )
+                arrayList.add(movie)
+                cursor.moveToNext()
+            }
+        }
+        cursor.close()
+        return arrayList
+    }
+
     fun getAllMovie():ArrayList<Movie>{
         val arrayList = arrayListOf<Movie>()
         val cursor = database.query(false,
@@ -133,6 +161,7 @@ class MovieHelper(context: Context) {
 
     fun insertMovie(movie: Movie):Long{
         val args = ContentValues()
+        args.put(_ID, movie.id)
         args.put(TITLE, movie.title)
         args.put(OVERVIEW, movie.overview)
         args.put(POSTER_PATH, movie.poster_path)
