@@ -1,4 +1,4 @@
-package com.rubahapi.moviedb.main.fragment.tvshow
+package com.rubahapi.moviedb.mainnavigator.fragment.favorite.favoritetvshow
 
 import android.support.v4.app.Fragment
 

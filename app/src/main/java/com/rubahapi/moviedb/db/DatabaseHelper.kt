@@ -7,8 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper
 class DatabaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object{
-        val DATABASE_NAME = "movie_catalogue_db"
-        val DATABASE_VERSION = 2
+        const val DATABASE_NAME = "movie_catalogue_db"
+        const val DATABASE_VERSION = 2
         val SQL_CREATE_TABLE_MOVIE = "CREATE TABLE ${MovieCatalogueDB.TABLE_MOVIE} " +
                 "(${MovieCatalogueDB.MovieColumns._ID} INTEGER PRIMARY_KEY AUTOINCREEMENT, " +
                 "${MovieCatalogueDB.MovieColumns.TITLE} TEXT NOT NULL, " +

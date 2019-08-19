@@ -22,8 +22,8 @@ class DetailMovieActivity : AppCompatActivity() {
         const val EXTRA_DETAIL_ACTIVITY_TYPE = "DetailActovotyType"
     }
 
-    lateinit var movie: Movie
-    lateinit var tvShow: TvShow
+    private lateinit var movie: Movie
+    private lateinit var tvShow: TvShow
     private var menuItem: Menu? = null
     private var isFavorite: Boolean = false
 //    lateinit var database:MovieHelper

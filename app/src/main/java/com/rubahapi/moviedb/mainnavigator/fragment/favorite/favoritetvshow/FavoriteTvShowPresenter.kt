@@ -1,13 +1,11 @@
-package com.rubahapi.moviedb.main.fragment.tvshow
+package com.rubahapi.moviedb.mainnavigator.fragment.favorite.favoritetvshow
 
 import android.content.ContentValues.TAG
-import android.content.Context
 import android.support.v4.app.Fragment
 import android.util.Log
 import com.google.gson.Gson
 import com.rubahapi.moviedb.api.ApiRepository
 import com.rubahapi.moviedb.api.TheMovieDbApi
-import com.rubahapi.moviedb.db.MovieHelper
 import com.rubahapi.moviedb.model.TvShow
 import com.rubahapi.moviedb.model.TvShowResponse
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -27,15 +25,6 @@ class FavoriteTvShowPresenter(private val view: FavoriteTVShowView,
         listData.add(TvShow(0,"No Connection Detected", "", ""))
         view.showTvShow(listData)
         view.hideLoading()
-    }
-
-    fun getTvShow(){
-        view.showLoading()
-        GlobalScope.launch(Dispatchers.Main + handler) {
-            val data = gson.fromJson(apiRepository.doRequest(TheMovieDbApi.getTvShowList()).await(), TvShowResponse::class.java)
-            view.showTvShow(data.tvShows)
-            view.hideLoading()
-        }
     }
 
     override fun onAttach(view: FavoriteTvShowFragment) {

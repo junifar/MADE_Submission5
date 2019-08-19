@@ -1,4 +1,4 @@
-package com.rubahapi.moviedb.main.fragment.tvshow
+package com.rubahapi.moviedb.mainnavigator.fragment.favorite.favoritetvshow
 
 
 import android.content.Intent
@@ -67,7 +67,7 @@ class FavoriteTvShowFragment : Fragment(), FavoriteTVShowView {
 //            this.context?.let { presenter.getTvShow(it) }
             val result = getTvShowDB()
             if (result == null){
-                var data = mutableListOf<TvShow>()
+                val data = mutableListOf<TvShow>()
                 data.add(TvShow(0,"No Data Show","",""))
                 showTvShow(data)
             }else{

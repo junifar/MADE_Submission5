@@ -2,7 +2,6 @@ package com.rubahapi.moviedb.mainnavigator.fragment.favorite.favoritemovie
 
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -13,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.Toast
 import com.google.gson.Gson
 import com.rubahapi.moviedb.DetailMovieActivity
 import com.rubahapi.moviedb.R
@@ -21,7 +19,6 @@ import com.rubahapi.moviedb.adapter.MovieAdapter
 import com.rubahapi.moviedb.api.ApiRepository
 import com.rubahapi.moviedb.db.MovieHelper
 import com.rubahapi.moviedb.model.Movie
-import com.rubahapi.moviedb.model.TvShow
 import com.rubahapi.moviedb.util.invisible
 import com.rubahapi.moviedb.util.visible
 
@@ -76,7 +73,7 @@ class FavoriteMovieFragment : Fragment(), FavoriteMovieView {
 //            presenter.getMovie()
             val result = getMovieDB()
             if (result == null){
-                var data= mutableListOf<Movie>()
+                val data= mutableListOf<Movie>()
                 data.add(Movie(0,"No Data Show","",""))
                 showMovie(data)
             }else{
