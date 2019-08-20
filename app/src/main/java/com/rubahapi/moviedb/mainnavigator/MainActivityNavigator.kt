@@ -1,27 +1,13 @@
 package com.rubahapi.moviedb.mainnavigator
 
-import android.app.SearchManager
-import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
-import android.widget.SearchView
 import com.rubahapi.moviedb.R
-import com.rubahapi.moviedb.mainnavigator.fragment.favorite.FavoriteFragment
 import com.rubahapi.moviedb.mainnavigator.fragment.MovieFragment
+import com.rubahapi.moviedb.mainnavigator.fragment.favorite.FavoriteFragment
 
-class MainActivityNavigator : AppCompatActivity(),SearchView.OnQueryTextListener {
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        return true
-    }
-
-    override fun onQueryTextChange(newText: String?): Boolean {
-        return true
-    }
-
-    private lateinit var menuItem: MenuItem
+class MainActivityNavigator : AppCompatActivity(){
 
     private  var savedInstanceState:Bundle = Bundle()
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -65,21 +51,4 @@ class MainActivityNavigator : AppCompatActivity(),SearchView.OnQueryTextListener
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-
-        menuInflater.inflate(R.menu.menu_search, menu)
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchView = menu?.findItem(R.id.action_search)?.actionView as SearchView
-
-        menuItem = menu.findItem(R.id.action_search) as MenuItem
-
-        searchView.setSearchableInfo(
-            searchManager
-                .getSearchableInfo(componentName)
-        )
-        searchView.maxWidth = Integer.MAX_VALUE
-
-        searchView.setOnQueryTextListener(this)
-        return super.onCreateOptionsMenu(menu)
-    }
 }
