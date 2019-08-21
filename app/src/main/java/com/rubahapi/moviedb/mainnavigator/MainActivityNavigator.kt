@@ -1,13 +1,35 @@
 package com.rubahapi.moviedb.mainnavigator
 
+import android.app.SearchManager
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.SearchView
+import android.view.Menu
+import android.view.MenuItem
 import com.rubahapi.moviedb.R
 import com.rubahapi.moviedb.mainnavigator.fragment.MovieFragment
 import com.rubahapi.moviedb.mainnavigator.fragment.favorite.FavoriteFragment
 
-class MainActivityNavigator : AppCompatActivity(){
+class MainActivityNavigator : AppCompatActivity(), SearchView.OnQueryTextListener{
+
+    private lateinit var menuItem: MenuItem
+    private val fm = supportFragmentManager
+
+    override fun onQueryTextSubmit(search: String?): Boolean {
+        return true
+    }
+
+    override fun onQueryTextChange(search: String?): Boolean {
+        val fragment = fm.findFragmentById(R.id.home_container) as MovieFragment
+        if (search != null) {
+            fragment.filterList(search)
+        }
+        return true
+    }
 
     private  var savedInstanceState:Bundle = Bundle()
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -49,6 +71,49 @@ class MainActivityNavigator : AppCompatActivity(){
 
         loadMovieFragment()
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        val searchManager = this.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = menu.findItem(R.id.action_search)?.actionView as SearchView
+
+        menuItem = menu.findItem(R.id.action_search) as MenuItem
+
+        searchView.setSearchableInfo(
+            searchManager
+                .getSearchableInfo(this.componentName)
+        )
+        searchView.maxWidth = Integer.MAX_VALUE
+
+        searchView.setOnQueryTextListener(this)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+//    override fun onCreateOptionsMenu(menu: Menu) {
+//        menuInflater.inflate(R.menu.main_menu, menu)
+//        val searchManager = this.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+//        val searchView = menu.findItem(R.id.action_search)?.actionView as SearchView
+//
+//        menuItem = menu.findItem(R.id.action_search) as MenuItem
+//
+//        searchView.setSearchableInfo(
+//            searchManager
+//                .getSearchableInfo(this.componentName)
+//        )
+//        searchView.maxWidth = Integer.MAX_VALUE
+//
+//        searchView.setOnQueryTextListener(this)
+//        super.onCreateOptionsMenu(menu)
+//    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == R.id.action_change_settings){
+            val intent = Intent(Settings.ACTION_LOCALE_SETTINGS)
+            startActivity(intent)
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }

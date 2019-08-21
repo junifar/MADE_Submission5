@@ -27,17 +27,4 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         toolbar.inflateMenu(R.menu.main_menu)
     }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item?.itemId == R.id.action_change_settings){
-            val intent = Intent(Settings.ACTION_LOCALE_SETTINGS)
-            startActivity(intent)
-        }
-        return super.onOptionsItemSelected(item)
-    }
 }

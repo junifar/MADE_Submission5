@@ -1,17 +1,19 @@
 package com.rubahapi.moviedb.main.fragment.movie
 
 
+import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.support.v7.widget.SearchView
+import android.view.*
 import android.widget.ProgressBar
 import android.widget.Toast
 import com.google.gson.Gson
@@ -23,7 +25,10 @@ import com.rubahapi.moviedb.model.Movie
 import com.rubahapi.moviedb.util.invisible
 import com.rubahapi.moviedb.util.visible
 
-class MovieFragment : Fragment(), MovieView {
+class MovieFragment : Fragment(), MovieView{
+
+    private lateinit var menuItem: MenuItem
+
     private var items: ArrayList<Movie> = arrayListOf()
     private lateinit var adapter: MovieAdapter
     private lateinit var progressBar: ProgressBar
@@ -124,6 +129,13 @@ class MovieFragment : Fragment(), MovieView {
         swipeRefresh.isRefreshing = false
         items.clear()
         items.addAll(data)
+        adapter.notifyDataSetChanged()
+    }
+
+    fun filterList(textFilter:String){
+        val dataFilter = items.filter { it.overview?.contains(textFilter, true)?:false }
+        items.clear()
+        items.addAll(dataFilter)
         adapter.notifyDataSetChanged()
     }
 
