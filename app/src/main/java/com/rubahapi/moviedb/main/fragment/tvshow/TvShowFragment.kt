@@ -28,6 +28,8 @@ class TvShowFragment : Fragment(), TVShowView {
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var list:RecyclerView
 
+    private lateinit var listItems:List<TvShow>
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putParcelableArrayList(ITEM_DATA_SAVED, items)
@@ -109,8 +111,16 @@ class TvShowFragment : Fragment(), TVShowView {
 
     override fun showTvShow(data: List<TvShow>) {
         swipeRefresh.isRefreshing = false
+        listItems = data
         items.clear()
         items.addAll(data)
+        adapter.notifyDataSetChanged()
+    }
+
+    fun filterList(textFilter:String){
+        val dataFilter = listItems.filter { it.name?.contains(textFilter, true)?:false}
+        items.clear()
+        items.addAll(dataFilter)
         adapter.notifyDataSetChanged()
     }
 

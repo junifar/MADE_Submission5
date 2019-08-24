@@ -1,21 +1,17 @@
 package com.rubahapi.moviedb.main.fragment.movie
 
 
-import android.app.SearchManager
-import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.SearchView
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.Toast
 import com.google.gson.Gson
 import com.rubahapi.moviedb.DetailMovieActivity
 import com.rubahapi.moviedb.R
@@ -27,9 +23,8 @@ import com.rubahapi.moviedb.util.visible
 
 class MovieFragment : Fragment(), MovieView{
 
-    private lateinit var menuItem: MenuItem
-
     private var items: ArrayList<Movie> = arrayListOf()
+    private lateinit var listItems:List<Movie>
     private lateinit var adapter: MovieAdapter
     private lateinit var progressBar: ProgressBar
     private lateinit var presenter: MoviePresenter
@@ -47,18 +42,29 @@ class MovieFragment : Fragment(), MovieView{
 
         swipeRefresh.setColorSchemeColors(ContextCompat.getColor(context!!, android.R.color.holo_green_dark))
 
-        val context = this.context
-        if(context != null){
-            adapter = MovieAdapter(context, items){
-                val intent = Intent(activity, DetailMovieActivity::class.java)
-                intent.putExtra(
-                    DetailMovieActivity.EXTRA_DETAIL_ACTIVITY_TYPE,
-                    DetailMovieActivity.EXTRA_DETAIL_MOVIE
-                )
-                intent.putExtra(DetailMovieActivity.EXTRA_DETAIL_MOVIE, it)
-                startActivity(intent)
-            }
+//        val context = this.context
+//        if(context != null){
+//            adapter = MovieAdapter(items){
+//                val intent = Intent(activity, DetailMovieActivity::class.java)
+//                intent.putExtra(
+//                    DetailMovieActivity.EXTRA_DETAIL_ACTIVITY_TYPE,
+//                    DetailMovieActivity.EXTRA_DETAIL_MOVIE
+//                )
+//                intent.putExtra(DetailMovieActivity.EXTRA_DETAIL_MOVIE, it)
+//                startActivity(intent)
+//            }
+//        }
+
+        adapter = MovieAdapter(items){
+            val intent = Intent(activity, DetailMovieActivity::class.java)
+            intent.putExtra(
+                DetailMovieActivity.EXTRA_DETAIL_ACTIVITY_TYPE,
+                DetailMovieActivity.EXTRA_DETAIL_MOVIE
+            )
+            intent.putExtra(DetailMovieActivity.EXTRA_DETAIL_MOVIE, it)
+            startActivity(intent)
         }
+
         list.adapter = adapter
 
         val request = ApiRepository()
@@ -68,13 +74,14 @@ class MovieFragment : Fragment(), MovieView{
 
         if (savedInstanceState == null){
             presenter.getMovie()
+            adapter?.notifyDataSetChanged()
         }else{
             items.clear()
-            savedInstanceState.getParcelableArrayList<Movie>(ITEM_DATA_SAVED).forEach {
+            savedInstanceState.getParcelableArrayList<Movie>(ITEM_DATA_SAVED)?.forEach {
                 movie ->
                 items.add(movie)
             }
-            adapter.notifyDataSetChanged()
+            adapter?.notifyDataSetChanged()
         }
 
         swipeRefresh.setOnRefreshListener {
@@ -92,6 +99,7 @@ class MovieFragment : Fragment(), MovieView{
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         initComponent(savedInstanceState)
     }
 
@@ -129,13 +137,21 @@ class MovieFragment : Fragment(), MovieView{
         swipeRefresh.isRefreshing = false
         items.clear()
         items.addAll(data)
+        listItems = data
         adapter.notifyDataSetChanged()
     }
 
     fun filterList(textFilter:String){
-        val dataFilter = items.filter { it.overview?.contains(textFilter, true)?:false }
+        val dataFilter = listItems.filter { it.title?.contains(textFilter, true)?:false}
         items.clear()
         items.addAll(dataFilter)
+        adapter.notifyDataSetChanged()
+    }
+
+    override fun showBlankMovie(){
+        swipeRefresh.isRefreshing = false
+        items.clear()
+        this.listItems = mutableListOf()
         adapter.notifyDataSetChanged()
     }
 

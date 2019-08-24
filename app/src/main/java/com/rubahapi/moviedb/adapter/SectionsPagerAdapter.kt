@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter
 import com.rubahapi.moviedb.main.fragment.movie.MovieFragment
 import com.rubahapi.moviedb.R
 import com.rubahapi.moviedb.main.fragment.tvshow.TvShowFragment
+import com.rubahapi.moviedb.model.Movie
 
 private val TAB_TITLES = arrayOf(
     R.string.tab_movie,
@@ -16,11 +17,14 @@ private val TAB_TITLES = arrayOf(
 class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     private var positionState = 0
+    private lateinit var listItem:List<Movie>
 
     override fun getItem(position: Int): Fragment {
         this.positionState = position
         return when (position) {
-            0 -> MovieFragment.newInstance()
+            0 -> {
+                MovieFragment.newInstance()
+            }
             else -> TvShowFragment.newInstance()
         }
     }

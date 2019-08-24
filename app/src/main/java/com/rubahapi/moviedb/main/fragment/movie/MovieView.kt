@@ -8,4 +8,5 @@ interface MovieView {
     fun onAttachView()
     fun onDetachView()
     fun showMovie(data: List<Movie>)
+    fun showBlankMovie()
 }
