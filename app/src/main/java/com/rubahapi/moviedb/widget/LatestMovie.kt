@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.widget.RemoteViews
 import com.rubahapi.moviedb.R
+import com.rubahapi.moviedb.db.MovieHelper
 
 /**
  * Implementation of App Widget functionality.
@@ -40,11 +41,15 @@ class LatestMovie : AppWidgetProvider() {
             context: Context, appWidgetManager: AppWidgetManager,
             appWidgetId: Int
         ) {
+            val database = MovieHelper(context)
+            val movieHelper = database.getInstance(context)
+            movieHelper.open()
+            val result = movieHelper.getAllTvShow()
 
-            val widgetText = context.getString(R.string.appwidget_text)
+//            val widgetText = context.getString(R.string.appwidget_text)
             // Construct the RemoteViews object
             val views = RemoteViews(context.packageName, R.layout.latest_movie)
-            views.setTextViewText(R.id.appwidget_text, widgetText)
+            views.setTextViewText(R.id.appwidget_text, result[0].name)
 
             // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidgetId, views)
