@@ -3,19 +3,15 @@ package com.rubahapi.moviedb.mainnavigator.fragment.favorite.favoritemovie
 import android.content.ContentValues.TAG
 import android.support.v4.app.Fragment
 import android.util.Log
-import android.widget.Toast
 import com.google.gson.Gson
 import com.rubahapi.moviedb.api.ApiRepository
 import com.rubahapi.moviedb.api.TheMovieDbApi
-import com.rubahapi.moviedb.main.MainActivity
 import com.rubahapi.moviedb.model.Movie
 import com.rubahapi.moviedb.model.MovieResponse
-import com.rubahapi.moviedb.model.TvShow
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class FavoriteMoviePresenter(private val view: FavoriteMovieView,
                              private val apiRepository: ApiRepository,

@@ -74,14 +74,14 @@ class MovieFragment : Fragment(), MovieView{
 
         if (savedInstanceState == null){
             presenter.getMovie()
-            adapter?.notifyDataSetChanged()
+            adapter.notifyDataSetChanged()
         }else{
             items.clear()
             savedInstanceState.getParcelableArrayList<Movie>(ITEM_DATA_SAVED)?.forEach {
                 movie ->
                 items.add(movie)
             }
-            adapter?.notifyDataSetChanged()
+            adapter.notifyDataSetChanged()
         }
 
         swipeRefresh.setOnRefreshListener {
@@ -157,11 +157,5 @@ class MovieFragment : Fragment(), MovieView{
 
     companion object{
         const val ITEM_DATA_SAVED = "itemsData"
-        @JvmStatic
-        fun newInstance(): MovieFragment {
-            return MovieFragment().apply {
-                arguments = Bundle().apply {}
-            }
-        }
     }
 }

@@ -126,12 +126,6 @@ class TvShowFragment : Fragment(), TVShowView {
 
     companion object{
         const val ITEM_DATA_SAVED = "itemsData"
-        @JvmStatic
-        fun newInstance(): TvShowFragment {
-            return TvShowFragment().apply {
-                arguments = Bundle().apply {}
-            }
-        }
 
     }
 

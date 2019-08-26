@@ -136,12 +136,6 @@ class FavoriteTvShowFragment : Fragment(), FavoriteTVShowView {
 
     companion object{
         const val ITEM_DATA_SAVED = "itemsData"
-        @JvmStatic
-        fun newInstance(): FavoriteTvShowFragment {
-            return FavoriteTvShowFragment().apply {
-                arguments = Bundle().apply {}
-            }
-        }
 
     }
 
