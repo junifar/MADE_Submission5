@@ -46,10 +46,13 @@ class LatestMovie : AppWidgetProvider() {
             movieHelper.open()
             val result = movieHelper.getAllTvShow()
 
+            var countMovie = 0
+
 //            val widgetText = context.getString(R.string.appwidget_text)
             // Construct the RemoteViews object
             val views = RemoteViews(context.packageName, R.layout.latest_movie)
-            views.setTextViewText(R.id.appwidget_text, result[0].name)
+            views.setTextViewText(R.id.appwidget_movie, result.size.toString())
+            views.setTextViewText(R.id.appwidget_tvshow, countMovie.toString())
 
             // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidgetId, views)
