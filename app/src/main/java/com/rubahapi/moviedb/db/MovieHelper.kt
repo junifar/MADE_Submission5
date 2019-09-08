@@ -2,8 +2,10 @@ package com.rubahapi.moviedb.db
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.provider.ContactsContract
 import com.rubahapi.moviedb.db.MovieCatalogueDB.Companion.TABLE_MOVIE
 import com.rubahapi.moviedb.db.MovieCatalogueDB.MovieColumns.Companion.OVERVIEW
 import com.rubahapi.moviedb.db.MovieCatalogueDB.MovieColumns.Companion.POSTER_PATH
@@ -45,6 +47,29 @@ class MovieHelper(context: Context) {
     fun close(){
         databaseHelper.close()
         if (database.isOpen) database.close()
+    }
+
+    fun query(): ArrayList<Movie> {
+        val arrayList = ArrayList<Movie>()
+        val cursor = database.query(databaseTable, null, null, null, null, null, "$_ID DESC", null)
+        cursor.moveToFirst()
+        var note: ContactsContract.CommonDataKinds.Note
+        if (cursor.count > 0) {
+            do {
+                val movie = Movie(
+                    cursor.getInt(cursor.getColumnIndexOrThrow(_ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(TITLE)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(OVERVIEW)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(POSTER_PATH))
+
+                )
+                arrayList.add(movie)
+                cursor.moveToNext()
+
+            } while (!cursor.isAfterLast)
+        }
+        cursor.close()
+        return arrayList
     }
 
     fun getTvShowByID(id:Int):ArrayList<TvShow>{
@@ -177,30 +202,34 @@ class MovieHelper(context: Context) {
         return database.insert(databaseTableTvShow, null, args)
     }
 
-    fun updateTvShow(tvShow: TvShow):Int{
-        val args = ContentValues()
-        args.put(TITLE, tvShow.name)
-        args.put(OVERVIEW, tvShow.overview)
-        args.put(POSTER_PATH, tvShow.poster_path)
-        return database.update(databaseTableTvShow, args, "$_ID = ${tvShow.name}", null)
-    }
-
     fun deleteTvShow(id:Int):Int{
         return database.delete(databaseTableTvShow, "$_ID = $id", null)
-    }
-
-    fun updateMovie(movie: Movie):Int{
-        val args = ContentValues()
-        args.put(TITLE, movie.title)
-        args.put(OVERVIEW, movie.overview)
-        args.put(POSTER_PATH, movie.poster_path)
-        return database.update(databaseTable, args, "$_ID = ${movie.title}", null)
     }
 
     fun deleteMovie(id:Int):Int{
         return database.delete(databaseTable, "$_ID = $id", null)
     }
+
+    fun insertProvider(values: ContentValues): Long {
+        return database.insert(databaseTable, null, values)
+    }
+
+    fun updateProvider(id: String, values: ContentValues): Int {
+        return database.update(databaseTable, values, "$_ID = ?", arrayOf(id))
+    }
+
+    fun deleteProvider(id: String): Int {
+        return database.delete(databaseTable, "$_ID = ?", arrayOf(id))
+    }
+
+    fun queryByIdProvider(id: String): Cursor {
+        return database.query(databaseTable, null, "$_ID = ?", arrayOf(id), null, null, null, null)
+    }
+
+    fun queryProvider(): Cursor {
+        return database.query(databaseTable, null, null, null, null, null, "$_ID ASC")
+    }
 }
 
 val Context.database: MovieHelper
-get() = MovieHelper(applicationContext).getInstance(applicationContext)
+    get() = MovieHelper(applicationContext).getInstance(applicationContext)

@@ -10,7 +10,6 @@ import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.rubahapi.moviedb.db.MovieHelper
-import com.rubahapi.moviedb.db.database
 import com.rubahapi.moviedb.model.Movie
 import com.rubahapi.moviedb.model.TvShow
 
