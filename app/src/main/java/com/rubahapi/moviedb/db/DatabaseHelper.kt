@@ -5,6 +5,21 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
 class DatabaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+    var context:Context
+    var name: String? = null
+    private var factory:SQLiteDatabase.CursorFactory? = null
+    var version:Int = 0
+
+    init {
+        this.context = context
+    }
+
+    constructor(context: Context, name: String?, factory: SQLiteDatabase.CursorFactory?, version: Int):this(context){
+        this.context = context
+        this.name = name
+        this.factory = factory
+        this.version = version
+    }
 
     companion object{
         const val DATABASE_NAME = "movie_catalogue_db"
