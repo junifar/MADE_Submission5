@@ -10,14 +10,23 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.rubahapi.moviedb.R
+import com.rubahapi.moviedb.db.DatabaseHelper
 import com.rubahapi.moviedb.mainnavigator.fragment.MovieFragment
 import com.rubahapi.moviedb.mainnavigator.fragment.favorite.FavoriteFragment
+import com.rubahapi.moviedb.model.Movie
 
 class MainActivityNavigator : AppCompatActivity(), SearchView.OnQueryTextListener{
 
     private lateinit var menuItem: MenuItem
     private val fm = supportFragmentManager
+
+    private fun newMovie(){
+        val helper = DatabaseHelper(this, null, null, 1)
+        val movie = Movie(1, "Title", "overview", "path")
+        helper.addMovie(movie)
+    }
 
     override fun onQueryTextSubmit(search: String?): Boolean {
         return true
@@ -71,6 +80,7 @@ class MainActivityNavigator : AppCompatActivity(), SearchView.OnQueryTextListene
 
         loadMovieFragment()
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+        newMovie()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
