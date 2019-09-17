@@ -24,7 +24,7 @@ class MainActivityNavigator : AppCompatActivity(), SearchView.OnQueryTextListene
 
     private fun newMovie(){
         val helper = DatabaseHelper(this, null, null, 1)
-        val movie = Movie(1, "Title", "overview", "path")
+        val movie = Movie(1, "Title111", "overview", "path")
         helper.addMovie(movie)
     }
 

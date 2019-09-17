@@ -1,4 +1,4 @@
-package com.rubahapi.moviedb.providers
+package com.rubahapi.moviedb.provider
 
 import android.content.ContentProvider
 import android.content.ContentValues

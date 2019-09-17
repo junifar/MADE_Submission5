@@ -10,7 +10,7 @@ import com.rubahapi.moviedb.db.MovieCatalogueDB.MovieColumns.Companion.POSTER_PA
 import com.rubahapi.moviedb.db.MovieCatalogueDB.MovieColumns.Companion.TITLE
 import com.rubahapi.moviedb.db.MovieCatalogueDB.MovieColumns.Companion._ID
 import com.rubahapi.moviedb.model.Movie
-import com.rubahapi.moviedb.providers.MovieProvider.Companion.CONTENT_URI
+import com.rubahapi.moviedb.provider.MovieProvider.Companion.CONTENT_URI
 
 class DatabaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     var context:Context
@@ -60,6 +60,7 @@ class DatabaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
 
     fun addMovie(movie:Movie){
         val values = ContentValues()
+        values.put(_ID, movie.id)
         values.put(TITLE, movie.title)
         values.put(OVERVIEW, movie.overview)
         values.put(POSTER_PATH, movie.poster_path)

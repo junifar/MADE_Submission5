@@ -39,8 +39,8 @@
 
 <!--        </activity>-->
         <provider
-                android:authorities=".provider.MovieProvider"
-                android:name=".providers.MovieProvider"
+                android:authorities="com.rubahapi.moviedb.provider.MovieProvider"
+                android:name=".provider.MovieProvider"
             android:enabled="true" android:exported="true"/>
     </application>
 
