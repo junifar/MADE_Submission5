@@ -42,6 +42,10 @@
                 android:authorities="com.rubahapi.moviedb.provider.MovieProvider"
                 android:name=".provider.MovieProvider"
             android:enabled="true" android:exported="true"/>
+        <provider
+                android:authorities="com.rubahapi.moviedb.provider.TVShowProvider"
+                android:name=".provider.TVShowProvider"
+                android:enabled="true" android:exported="true"/>
     </application>
 
 </manifest>

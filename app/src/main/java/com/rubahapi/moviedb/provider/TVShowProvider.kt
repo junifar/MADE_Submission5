@@ -22,7 +22,7 @@ class TVShowProvider : ContentProvider() {
     private val sURIMatcher = UriMatcher(UriMatcher.NO_MATCH)
 
     companion object {
-        const val AUTHORITY = "com.rubahapi.moviedb.provider.MovieProvider"
+        const val AUTHORITY = "com.rubahapi.moviedb.provider.TVShowProvider"
         val CONTENT_URI_TV_SHOW : Uri = Uri.parse("content://" + AUTHORITY + "/" +
                 TABLE_TV_SHOW)
     }
