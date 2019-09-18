@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.rubahapi.moviedb.db.MovieCatalogueDB.Companion.TABLE_MOVIE
 import com.rubahapi.moviedb.db.MovieCatalogueDB.MovieColumns.Companion.OVERVIEW
 import com.rubahapi.moviedb.db.MovieCatalogueDB.MovieColumns.Companion.POSTER_PATH
 import com.rubahapi.moviedb.db.MovieCatalogueDB.MovieColumns.Companion.TITLE
@@ -19,7 +18,7 @@ class MovieHelper(context: Context) {
     private val databaseHelper: DatabaseHelper = DatabaseHelper(context)
     private lateinit var instance: MovieHelper
     private lateinit var database: SQLiteDatabase
-    private val databaseTable = TABLE_MOVIE
+    private val databaseTable = MovieCatalogueDB.TABLE_MOVIE
     private val databaseTableTvShow = TABLE_TV_SHOW
 
     fun getInstance(context: Context): MovieHelper{

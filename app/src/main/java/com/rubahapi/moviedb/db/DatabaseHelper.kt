@@ -10,7 +10,9 @@ import com.rubahapi.moviedb.db.MovieCatalogueDB.MovieColumns.Companion.POSTER_PA
 import com.rubahapi.moviedb.db.MovieCatalogueDB.MovieColumns.Companion.TITLE
 import com.rubahapi.moviedb.db.MovieCatalogueDB.MovieColumns.Companion._ID
 import com.rubahapi.moviedb.model.Movie
+import com.rubahapi.moviedb.model.TvShow
 import com.rubahapi.moviedb.provider.MovieProvider.Companion.CONTENT_URI
+import com.rubahapi.moviedb.provider.TVShowProvider.Companion.CONTENT_URI_TV_SHOW
 
 class DatabaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     var context:Context
@@ -65,5 +67,14 @@ class DatabaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
         values.put(OVERVIEW, movie.overview)
         values.put(POSTER_PATH, movie.poster_path)
         myCR.insert(CONTENT_URI, values)
+    }
+
+    fun addTVShow(tvShow: TvShow){
+        val values = ContentValues()
+        values.put(TvShowDB.TvShowColumns._ID, tvShow.id)
+        values.put(TvShowDB.TvShowColumns.OVERVIEW, tvShow.overview)
+        values.put(TvShowDB.TvShowColumns.TITLE, tvShow.name)
+        values.put(TvShowDB.TvShowColumns.POSTER_PATH, tvShow.poster_path)
+        myCR.insert(CONTENT_URI_TV_SHOW, values)
     }
 }
