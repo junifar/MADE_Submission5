@@ -68,31 +68,6 @@ class MovieHelper(context: Context) {
         }
         cursor.close()
         return listMovie
-//        val arrayList = arrayListOf<TvShow>()
-//        val cursor = database.query(false,
-//            databaseTableTvShow,
-//            null,
-//            "$_ID = $id",
-//            null,
-//            null,
-//            null,
-//            "$_ID ASC",
-//            null)
-//        cursor.moveToFirst()
-//        if (cursor.count > 0){
-//            while (!cursor.isAfterLast){
-//                val tvshow = TvShow(
-//                    cursor.getString(cursor.getColumnIndexOrThrow(_ID)).toInt(),
-//                    cursor.getString(cursor.getColumnIndexOrThrow(TITLE)),
-//                    cursor.getString(cursor.getColumnIndexOrThrow(OVERVIEW)),
-//                    cursor.getString(cursor.getColumnIndexOrThrow(POSTER_PATH))
-//                )
-//                arrayList.add(tvshow)
-//                cursor.moveToNext()
-//            }
-//        }
-//        cursor.close()
-//        return arrayList
     }
 
     fun getAllTvShow():ArrayList<TvShow>{
@@ -113,31 +88,6 @@ class MovieHelper(context: Context) {
         }
         cursor.close()
         return listTvShow
-//        val arrayList = arrayListOf<TvShow>()
-//        val cursor = database.query(false,
-//            databaseTableTvShow,
-//            null,
-//            null,
-//            null,
-//            null,
-//            null,
-//            "$_ID ASC",
-//            null)
-//        cursor.moveToFirst()
-//        if (cursor.count > 0){
-//            while (!cursor.isAfterLast){
-//                val tvshow = TvShow(
-//                    cursor.getString(cursor.getColumnIndexOrThrow(_ID)).toInt(),
-//                    cursor.getString(cursor.getColumnIndexOrThrow(TITLE)),
-//                    cursor.getString(cursor.getColumnIndexOrThrow(OVERVIEW)),
-//                    cursor.getString(cursor.getColumnIndexOrThrow(POSTER_PATH))
-//                )
-//                arrayList.add(tvshow)
-//                cursor.moveToNext()
-//            }
-//        }
-//        cursor.close()
-//        return arrayList
     }
 
     fun getMovieByID(id:Int):ArrayList<Movie>{
@@ -158,31 +108,6 @@ class MovieHelper(context: Context) {
         }
         cursor.close()
         return listMovie
-//        val arrayList = arrayListOf<Movie>()
-//        val cursor = database.query(false,
-//            databaseTable,
-//            null,
-//            "$_ID = $id",
-//            null,
-//            null,
-//            null,
-//            "$_ID ASC",
-//            null)
-//        cursor.moveToFirst()
-//        if (cursor.count > 0){
-//            while (!cursor.isAfterLast){
-//                val movie = Movie(
-//                    cursor.getString(cursor.getColumnIndexOrThrow(_ID)).toInt(),
-//                    cursor.getString(cursor.getColumnIndexOrThrow(TITLE)),
-//                    cursor.getString(cursor.getColumnIndexOrThrow(OVERVIEW)),
-//                    cursor.getString(cursor.getColumnIndexOrThrow(POSTER_PATH))
-//                )
-//                arrayList.add(movie)
-//                cursor.moveToNext()
-//            }
-//        }
-//        cursor.close()
-//        return arrayList
     }
 
     fun getAllMovie():ArrayList<Movie>{
@@ -203,31 +128,6 @@ class MovieHelper(context: Context) {
         }
         cursor.close()
         return listMovie
-//        val arrayList = arrayListOf<Movie>()
-//        val cursor = database.query(false,
-//            databaseTable,
-//            null,
-//            null,
-//            null,
-//            null,
-//            null,
-//            "$_ID ASC",
-//            null)
-//        cursor.moveToFirst()
-//        if (cursor.count > 0){
-//            while (!cursor.isAfterLast){
-//                val movie = Movie(
-//                    cursor.getString(cursor.getColumnIndexOrThrow(_ID)).toInt(),
-//                    cursor.getString(cursor.getColumnIndexOrThrow(TITLE)),
-//                    cursor.getString(cursor.getColumnIndexOrThrow(OVERVIEW)),
-//                    cursor.getString(cursor.getColumnIndexOrThrow(POSTER_PATH))
-//                )
-//                arrayList.add(movie)
-//                cursor.moveToNext()
-//            }
-//        }
-//        cursor.close()
-//        return arrayList
     }
 
     fun insertMovie(movie: Movie):Long{
