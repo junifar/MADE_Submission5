@@ -10,31 +10,26 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import com.rubahapi.moviedb.R
-import com.rubahapi.moviedb.db.DatabaseHelper
-import com.rubahapi.moviedb.db.Tvshow
 import com.rubahapi.moviedb.mainnavigator.fragment.MovieFragment
 import com.rubahapi.moviedb.mainnavigator.fragment.favorite.FavoriteFragment
-import com.rubahapi.moviedb.model.Movie
-import com.rubahapi.moviedb.model.TvShow
 
 class MainActivityNavigator : AppCompatActivity(), SearchView.OnQueryTextListener{
 
     private lateinit var menuItem: MenuItem
     private val fm = supportFragmentManager
-
-    private fun newMovie(){
-        val helper = DatabaseHelper(this, null, null, 1)
-        val movie = Movie(1, "Title111", "overview", "path")
-        helper.addMovie(movie)
-    }
-
-    private fun newTVShow(){
-        val helper = DatabaseHelper(this, null, null, 1)
-        val tvShow = TvShow(1, "Title111", "overview", "path")
-        helper.addTVShow(tvShow)
-    }
+//
+//    private fun newMovie(){
+//        val helper = DatabaseHelper(this, null, null, 1)
+//        val movie = Movie(1, "Title111", "overview", "path")
+//        helper.addMovie(movie)
+//    }
+//
+//    private fun newTVShow(){
+//        val helper = DatabaseHelper(this, null, null, 1)
+//        val tvShow = TvShow(1, "Title111", "overview", "path")
+//        helper.addTVShow(tvShow)
+//    }
 
     override fun onQueryTextSubmit(search: String?): Boolean {
         return true
@@ -88,8 +83,6 @@ class MainActivityNavigator : AppCompatActivity(), SearchView.OnQueryTextListene
 
         loadMovieFragment()
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
-        newMovie()
-        newTVShow()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
