@@ -18,6 +18,18 @@ class MainActivityNavigator : AppCompatActivity(), SearchView.OnQueryTextListene
 
     private lateinit var menuItem: MenuItem
     private val fm = supportFragmentManager
+//
+//    private fun newMovie(){
+//        val helper = DatabaseHelper(this, null, null, 1)
+//        val movie = Movie(1, "Title111", "overview", "path")
+//        helper.addMovie(movie)
+//    }
+//
+//    private fun newTVShow(){
+//        val helper = DatabaseHelper(this, null, null, 1)
+//        val tvShow = TvShow(1, "Title111", "overview", "path")
+//        helper.addTVShow(tvShow)
+//    }
 
     override fun onQueryTextSubmit(search: String?): Boolean {
         return true
