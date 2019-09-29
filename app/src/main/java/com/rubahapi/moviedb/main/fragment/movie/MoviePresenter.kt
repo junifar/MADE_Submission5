@@ -36,11 +36,11 @@ class MoviePresenter(private val view: MovieView,
         }
     }
 
-    override fun onAttach(view: MovieFragment) {
+     fun onAttach(view: MovieFragment) {
         mView = view
     }
 
-    override fun onDetach() {
+     fun onDetach() {
         mView = null
     }
 
