@@ -11,4 +11,8 @@ object TheMovieDbApi {
     fun getTvShowList():String{
         return "$BASE_URL/discover/tv?api_key=$TMDB_API_KEY&language=en-US"
     }
+
+    fun getTodayRelease(releaseDate:String):String{
+        return "$BASE_URL/discover/movie?api_key=$TMDB_API_KEY&primary_release_date.gte=$releaseDate&primary_release_date.lte=$releaseDate"
+    }
 }

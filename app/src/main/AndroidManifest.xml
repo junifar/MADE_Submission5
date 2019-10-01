@@ -12,6 +12,9 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
+                android:name=".SettingsActivity"
+                android:label="@string/title_activity_settings"/>
+        <activity
                 android:name=".mainnavigator.MainActivityNavigator"
                 android:label="@string/app_name"
                 android:theme="@style/AppTheme.NoActionBar">
@@ -28,10 +31,11 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".DetailMovieActivity" android:parentActivityName=".mainnavigator.MainActivityNavigator">
-        </activity>
-        <receiver android:name="com.rubahapi.moviedb.widget.LatestMovie">
-           <intent-filter>
+                android:name=".DetailMovieActivity"
+                android:parentActivityName=".mainnavigator.MainActivityNavigator"></activity>
+
+        <receiver android:name=".widget.LatestMovie">
+            <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
 
@@ -39,19 +43,28 @@
                     android:name="android.appwidget.provider"
                     android:resource="@xml/image_banner_widget_info" />
         </receiver>
-      
+
         <service
-                android:name="com.rubahapi.moviedb.widget.StackWidgetService"
+                android:name=".widget.StackWidgetService"
                 android:permission="android.permission.BIND_REMOTEVIEWS" />
+
         <provider
-                android:authorities="com.rubahapi.moviedb.provider.MovieProvider"
                 android:name=".provider.MovieProvider"
-            android:enabled="true" android:exported="true"/>
-      
+                android:authorities="com.rubahapi.moviedb.provider.MovieProvider"
+                android:enabled="true"
+                android:exported="true" />
         <provider
-                android:authorities="com.rubahapi.moviedb.provider.TVShowProvider"
                 android:name=".provider.TVShowProvider"
-                android:enabled="true" android:exported="true"/>
+                android:authorities="com.rubahapi.moviedb.provider.TVShowProvider"
+                android:enabled="true"
+                android:exported="true" />
+
+        <receiver android:name=".receiver.ReleaseReceiver" android:enabled="true"
+                android:exported="true"/>
+
+        <receiver android:name=".receiver.NotifReceiver" android:enabled="true"
+                android:exported="true" />
+
     </application>
 
 </manifest>
