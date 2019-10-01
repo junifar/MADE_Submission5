@@ -5,12 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
-import android.support.design.widget.TabLayout
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.ViewPager
-import android.support.v7.app.AppCompatActivity
+import com.google.android.material.tabs.TabLayout
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
+import androidx.appcompat.app.AppCompatActivity
 import android.view.*
 import com.rubahapi.moviedb.R
 import com.rubahapi.moviedb.mainnavigator.fragment.favorite.favoritemovie.FavoriteMovieFragment
@@ -39,7 +39,7 @@ class FavoriteFragment : Fragment() {
         val tabs: TabLayout = viewLayout.findViewById(R.id.tabs)
         tabs.setupWithViewPager(viewPager)
 
-        val toolbar = viewLayout.findViewById<android.support.v7.widget.Toolbar>(R.id.main_toolbar)
+        val toolbar = viewLayout.findViewById<androidx.appcompat.widget.Toolbar>(R.id.main_toolbar)
         toolbar.inflateMenu(R.menu.main_menu)
 
         (activity as AppCompatActivity).title = "Your Favorite Movie"
@@ -53,13 +53,13 @@ class FavoriteFragment : Fragment() {
         super.onCreateOptionsMenu(menu, menuInflater)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item?.itemId == R.id.action_change_settings){
-            val intent = Intent(Settings.ACTION_LOCALE_SETTINGS)
-            startActivity(intent)
-        }
-        return super.onOptionsItemSelected(item)
-    }
+//    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+//        if (item?.itemId == R.id.action_change_settings){
+//            val intent = Intent(Settings.ACTION_LOCALE_SETTINGS)
+//            startActivity(intent)
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
 
     inner class SectionsFavoritePagerAdapter(private val context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm) {
 

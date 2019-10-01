@@ -8,23 +8,31 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.provider.Settings
-import android.support.design.widget.BottomNavigationView
-import android.support.v4.app.NotificationCompat
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.SearchView
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.core.app.NotificationCompat
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
+import androidx.preference.PreferenceManager
 import com.rubahapi.moviedb.R
+import com.rubahapi.moviedb.SettingsActivity
 import com.rubahapi.moviedb.mainnavigator.fragment.MovieFragment
 import com.rubahapi.moviedb.mainnavigator.fragment.favorite.FavoriteFragment
 import com.rubahapi.moviedb.model.NotificationItem
+import com.rubahapi.moviedb.receiver.NotifReceiver
+import com.rubahapi.moviedb.receiver.ReleaseReceiver
+import com.rubahapi.moviedb.receiver.ReleaseReceiver.Companion.TYPE_REPEATING_DAILY_RELEASE
 import java.util.*
+
+
 
 
 class MainActivityNavigator : AppCompatActivity(), SearchView.OnQueryTextListener{
 
     private lateinit var menuItem: MenuItem
     private val fm = supportFragmentManager
+    private lateinit var alarmManager: AlarmManager
 
     companion object{
         private const val NOTIF_REQUEST_CODE = 200
@@ -48,6 +56,14 @@ class MainActivityNavigator : AppCompatActivity(), SearchView.OnQueryTextListene
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
+
+//        //still wrong here
+//        val calendar = Calendar.getInstance()
+//        calendar.set(Calendar.HOUR_OF_DAY, 19)
+//        calendar.set(Calendar.MINUTE, 23)
+//        calendar.set(Calendar.SECOND, 0)
+//        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+
         val mBuilder: NotificationCompat.Builder
 
         //Melakukan pengecekan jika idNotif lebih kecil dari Max Notif
@@ -159,7 +175,22 @@ class MainActivityNavigator : AppCompatActivity(), SearchView.OnQueryTextListene
             this.savedInstanceState = savedInstanceState
         }
 
-        sendNotifier()
+
+
+        val pref = PreferenceManager.getDefaultSharedPreferences(this)
+
+        val releaseReceiver = ReleaseReceiver()
+        releaseReceiver.setRepeatingAlarm(this, TYPE_REPEATING_DAILY_RELEASE, "08:12", "test", 105)
+        releaseReceiver.setRepeatingAlarm(this, TYPE_REPEATING_DAILY_RELEASE, "08:12", "test", 106)
+
+        val dailyReminder = pref.getBoolean("daily_reminder",false)
+        if (dailyReminder){
+            //daily reminder
+            val receiver = NotifReceiver()
+            receiver.setRepeatingAlarm(this, NotifReceiver.TYPE_REPEATING, "07:00", "test")
+//            alarmManager = baseContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+//            sendNotifier()
+        }
 
         loadMovieFragment()
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
@@ -203,6 +234,11 @@ class MainActivityNavigator : AppCompatActivity(), SearchView.OnQueryTextListene
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item?.itemId == R.id.action_change_settings){
             val intent = Intent(Settings.ACTION_LOCALE_SETTINGS)
+            startActivity(intent)
+        }
+
+        if(item?.itemId == R.id.action_settings){
+            val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
         }
         return super.onOptionsItemSelected(item)

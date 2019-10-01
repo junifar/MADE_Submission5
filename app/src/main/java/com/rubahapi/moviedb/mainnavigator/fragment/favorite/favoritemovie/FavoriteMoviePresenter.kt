@@ -1,7 +1,7 @@
 package com.rubahapi.moviedb.mainnavigator.fragment.favorite.favoritemovie
 
 import android.content.ContentValues.TAG
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.util.Log
 import com.google.gson.Gson
 import com.rubahapi.moviedb.api.ApiRepository

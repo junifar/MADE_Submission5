@@ -1,6 +1,6 @@
 package com.rubahapi.moviedb.mainnavigator.fragment.favorite.favoritetvshow
 
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 
 interface FavoriteTvShowPresenterView<T: Fragment> {
     fun onAttach(view: T)
