@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.provider.Settings
+import android.text.format.DateUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.core.app.NotificationCompat
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +24,9 @@ import com.rubahapi.moviedb.model.NotificationItem
 import com.rubahapi.moviedb.receiver.NotifReceiver
 import com.rubahapi.moviedb.receiver.ReleaseReceiver
 import com.rubahapi.moviedb.receiver.ReleaseReceiver.Companion.TYPE_REPEATING_DAILY_RELEASE
+import java.sql.Time
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 
 
@@ -179,17 +183,27 @@ class MainActivityNavigator : AppCompatActivity(), SearchView.OnQueryTextListene
 
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
 
-        val releaseReceiver = ReleaseReceiver()
-        releaseReceiver.setRepeatingAlarm(this, TYPE_REPEATING_DAILY_RELEASE, "08:12", "test", 105)
-        releaseReceiver.setRepeatingAlarm(this, TYPE_REPEATING_DAILY_RELEASE, "08:12", "test", 106)
+//        val releaseReceiver = ReleaseReceiver()
+//        releaseReceiver.setRepeatingAlarm(this, TYPE_REPEATING_DAILY_RELEASE, "01:20", "test")
+//        releaseReceiver.setRepeatingAlarm(this, TYPE_REPEATING_DAILY_RELEASE, "01:20", "test")
 
         val dailyReminder = pref.getBoolean("daily_reminder",false)
+        val receiver = NotifReceiver()
         if (dailyReminder){
             //daily reminder
-            val receiver = NotifReceiver()
             receiver.setRepeatingAlarm(this, NotifReceiver.TYPE_REPEATING, "07:00", "test")
 //            alarmManager = baseContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 //            sendNotifier()
+        }else if (!dailyReminder){
+            receiver.cancelAlarm(this, NotifReceiver.TYPE_REPEATING)
+        }
+
+        val releaseReminder = pref.getBoolean("release_reminder", false)
+        val releaseReceiver = ReleaseReceiver()
+        if(releaseReminder){
+            releaseReceiver.setRepeatingAlarm(this, TYPE_REPEATING_DAILY_RELEASE, "08:00", "test")
+        }else if (!releaseReminder){
+            releaseReceiver.cancelAlarm(this)
         }
 
         loadMovieFragment()
