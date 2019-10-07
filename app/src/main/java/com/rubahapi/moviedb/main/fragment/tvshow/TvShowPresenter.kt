@@ -36,6 +36,15 @@ class TvShowPresenter(private val view: TVShowView,
         }
     }
 
+    fun getTvShow(tvKey:String){
+        view.showLoading()
+        GlobalScope.launch(Dispatchers.Main) {
+            val data = gson.fromJson(apiRepository.doRequest(TheMovieDbApi.getFilterTvList(tvKey)).await(), TvShowResponse::class.java)
+            view.showTvShow(data.tvShows)
+            view.hideLoading()
+        }
+    }
+
     override fun onAttach(view: TvShowFragment) {
         mView = view
     }

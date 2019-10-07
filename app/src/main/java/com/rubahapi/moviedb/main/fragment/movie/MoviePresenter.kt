@@ -36,6 +36,15 @@ class MoviePresenter(private val view: MovieView,
         }
     }
 
+    fun getMovie(movieKey:String){
+        view.showLoading()
+        GlobalScope.launch(Dispatchers.Main + handler) {
+            val data = gson.fromJson(apiRepository.doRequest(TheMovieDbApi.getFilterMovieList(movieKey)).await(), MovieResponse::class.java)
+            if(data.movies.isNullOrEmpty()) view.showBlankMovie() else view.showMovie(data.movies)
+            view.hideLoading()
+        }
+    }
+
      fun onAttach(view: MovieFragment) {
         mView = view
     }

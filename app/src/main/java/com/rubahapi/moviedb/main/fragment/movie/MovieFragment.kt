@@ -142,10 +142,15 @@ class MovieFragment : Fragment(), MovieView{
     }
 
     fun filterList(textFilter:String){
-        val dataFilter = listItems.filter { it.title?.contains(textFilter, true)?:false}
-        items.clear()
-        items.addAll(dataFilter)
-        adapter.notifyDataSetChanged()
+//        val dataFilter = listItems.filter { it.title?.contains(textFilter, true)?:false}
+//        items.clear()
+//        items.addAll(dataFilter)
+//        adapter.notifyDataSetChanged()
+        if(textFilter.isNotEmpty()){
+            presenter.getMovie(textFilter)
+        }else{
+            presenter.getMovie()
+        }
     }
 
     override fun showBlankMovie(){

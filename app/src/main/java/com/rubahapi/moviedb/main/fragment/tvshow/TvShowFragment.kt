@@ -118,10 +118,20 @@ class TvShowFragment : Fragment(), TVShowView {
     }
 
     fun filterList(textFilter:String){
-        val dataFilter = listItems.filter { it.name?.contains(textFilter, true)?:false}
-        items.clear()
-        items.addAll(dataFilter)
-        adapter.notifyDataSetChanged()
+//        val dataFilter = listItems.filter { it.name?.contains(textFilter, true)?:false}
+//        items.clear()
+//        items.addAll(dataFilter)
+//        adapter.notifyDataSetChanged()
+
+//        val request = ApiRepository()
+//        val gson = Gson()
+//        presenter = TvShowPresenter(this, request, gson)
+//        onAttachView()
+        if(textFilter.isNotEmpty()){
+            presenter.getTvShow(textFilter)
+        }else{
+            presenter.getTvShow()
+        }
     }
 
     companion object{
