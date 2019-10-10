@@ -39,9 +39,8 @@ class ReleaseReceiver:BroadcastReceiver(){
     fun getReleaseToday(context: Context){
         GlobalScope.launch(Dispatchers.Main) {
             val repository = ApiRepository()
-            val releaseDate = Calendar.getInstance()
             val formatter = SimpleDateFormat("yyyy-MM-dd")
-            val data = Gson().fromJson(repository.doRequest(TheMovieDbApi.getTodayRelease(formatter.format(releaseDate))).await(), MovieResponse::class.java)
+            val data = Gson().fromJson(repository.doRequest(TheMovieDbApi.getTodayRelease(formatter.format(Date()))).await(), MovieResponse::class.java)
             if (data.movies.isNotEmpty()) {
                 showAlarmNotification(context, ID_REPEATING_RELEASE,"", data.movies)
             }
